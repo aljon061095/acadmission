@@ -128,7 +128,6 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                 </div>
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
                     <div class="modal-body">
-
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">

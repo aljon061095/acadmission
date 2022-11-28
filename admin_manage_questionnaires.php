@@ -5,37 +5,9 @@ require_once "includes/config.php";
 // Initialize the session
 session_start();
 
-$department_sql = "SELECT * FROM department";
-$department_result = mysqli_query($link, $department_sql);
-$departments = $department_result->fetch_all(MYSQLI_ASSOC);
-
-//adding courses
-if (isset($_POST['add_department'])) {
-    $department = $_POST['department'];
-    $status = 1;
-
-    $query = "INSERT INTO department(department, status)
-            VALUES ('$department', '$status')";
-    $query_run = mysqli_query($link, $query);
-
-    if ($query_run) {
-        $_SESSION['success_status'] = "You have successfully added a new department.";
-        header("location: manage_department.php");
-    }
-}
-
-if (isset($_POST['update_department'])) {
-    $department_id = $_POST['department_id'];
-    $department = $_POST['department'];
-
-    $query = "UPDATE department SET department = $department WHERE id = $department_id";
-    $query_run = mysqli_query($link, $query);
-
-    if ($query_run) {
-        $_SESSION['success_status'] = "You have successfully update the department.";
-        header("location: manage_department.php");
-    }
-}
+$questionnaires_sql = "SELECT * FROM questionnaires";
+$questionnaires_result = mysqli_query($link, $questionnaires_sql);
+$questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -57,16 +29,7 @@ if (isset($_POST['update_department'])) {
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Manage Department</h1>
-
-                    <div class="mb-3">
-                        <a href="#" class="btn btn-success" data-toggle="modal" data-target="#add_department">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-plus"></i>
-                            </span>
-                            <span class="text">Add New Department</span>
-                        </a>
-                    </div>
+                    <h1 class="h3 mb-4 text-gray-800">Manage Questionnaires</h1>
 
                     <div class="row">
                         <?php
@@ -85,30 +48,52 @@ if (isset($_POST['update_department'])) {
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Department List</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">List of Questionnaires</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>Title</th>
+                                            <th>Description</th>
                                             <th>Department</th>
+                                            <th>Course</th>
+                                            <th>Date Added</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($departments as $department) { ?>
+                                        <?php foreach ($questionnaires as $questionnaire) {
+                                            $settings = json_decode($questionnaire['settings']);
+                                        ?>
                                             <tr>
+                                                <td><?php print $settings->{'name'}; ?></td>
+                                                <td><?php print $settings->{'description'}; ?></td>
+                                                <?php
+                                                    $course_id = $settings->{'course'};
+                                                    $result = mysqli_query($link, "SELECT *
+                                                    FROM courses WHERE id = $course_id");
+                                                    $course = mysqli_fetch_array($result);
+                                                ?>
+
+                                                <?php
+                                                    $department_id = $course['department_id'];
+                                                    $result = mysqli_query($link, "SELECT *
+                                                    FROM department WHERE id = $department_id");
+                                                    $department = mysqli_fetch_array($result);
+                                                ?>
                                                 <td><?php echo $department['department']; ?></td>
+                                                <td><?php echo $course['course']; ?></td>
+                                                <td><?php echo date('m-d-Y', strtotime($questionnaire['date_added'])); ?></td>
                                                 <td class="text-center">
-                                                    <a href="#" class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#update_department_<?php echo $department['id']; ?>">
-                                                        <i class="fas fa-pencil-alt"></i>
+                                                    <a href="#" class="btn btn-success btn-circle btn-sm">
+                                                        <i class="fas fa-check"></i>
                                                     </a>
-                                                    <button type="button" class="btn btn-danger btn-circle btn-sm delete" data-id="<?php echo $department['id']; ?>" data-table-name="department">
+                                                    <button type="button" class="btn btn-danger btn-circle btn-sm delete" data-id="<?php echo $questionnaire['id']; ?>" data-table-name="questionnaires">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </td>
-                                                <?php include 'update_department.php'; ?>
                                             </tr>
                                         <?php  } ?>
                                     </tbody>
@@ -127,7 +112,7 @@ if (isset($_POST['update_department'])) {
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Add New Department Modal-->
+    <!-- Add New Examinee Modal-->
     <div class="modal fade" id="add_department" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

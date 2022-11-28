@@ -18,7 +18,7 @@ $settings = json_decode($questionnaire['settings']);
 $choose_timer =$settings->{'choose_timer'};
 $timer = $settings->{'choose_timer'} == 1 ? $settings->{'choose_timer_option'}[0] : $settings->{'choose_timer_option'}[1];
 
-$questions_sql = "SELECT * FROM questions WHERE questionnaires_id = $questionnaire_id";
+$questions_sql = "SELECT * FROM questions WHERE questionnaires_id = $questionnaire_id ORDER BY rand()";
 $questions_result = mysqli_query($link, $questions_sql);
 $questions = $questions_result->fetch_all(MYSQLI_ASSOC);
 
@@ -39,8 +39,9 @@ foreach ($questions as $question) {
         array_push($array, $option['options']);
     }
 
-    $jsonQuestion['answers'] = $array;
+    $jsonQuestion['options'] = $array;
     $jsonQuestion['correctAnswer'] = $question['answer'];
+    $jsonQuestion['question_type'] = $question['question_type'];
     $jsonQuestion['points'] = $question['points'];
 
     array_push($data, json_encode($jsonQuestion));
@@ -296,27 +297,48 @@ if (isset($_POST['complete_exam'])) {
                         questionNumber = i;
                         currentQuestion = jQuery.parseJSON(questionArray[i]);
 
+                        console.log(currentQuestion);
+
                         // variable to store the list of possible answers
-                        const answers = [];
+                        const options = [];
 
                         // and for each available answer...
-                        for (letter in currentQuestion.answers) {
+                        for (letter in currentQuestion.options) {
                             $option = parseInt(letter) + 1;
                             // ...add an HTML radio button
-                            answers.push(
-                                `<label>
-                                <input type="radio" name="question${questionNumber}" value="${$option}">
-                                    ${$option} :
-                                    ${currentQuestion.answers[letter]}
-                                </label>`
-                            );
+                            
+
+
+                            //multiple choice
+                            if (currentQuestion.question_type == 2) {
+                                options.push(
+                                    `<label>
+                                    <input type="radio" name="question${questionNumber}" value="${$option}">
+                                        ${$option} :
+                                        ${currentQuestion.options[letter]}
+                                    </label>`
+                                );
+                            }
+
+                            //identification
+                            
+
+                            //true or false
+                            if (currentQuestion.question_type == 4) {
+                                options.push(
+                                    `<label>
+                                    <input type="radio" name="question${questionNumber}" value="${$option}">
+                                        ${currentQuestion.options[letter]}
+                                    </label>`
+                                );
+                            }
                         }
 
                         // add this question and its answers to the output
                         output.push(
                             `<div class="slide">
                                 <div class="question"> ${currentQuestion.question} </div>
-                                <div class="answers"> ${answers.join("")} </div>
+                                <div class="answers"> ${options.join("")} </div>
                                 <div class="points"><span class="badge badge-success">Points:</span> ${currentQuestion.points}</div>
                             </div>`
                         );

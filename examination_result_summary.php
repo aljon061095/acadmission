@@ -64,7 +64,7 @@ $exam_results = $examination_result->fetch_all(MYSQLI_ASSOC);
                                                     <?php echo $examinee['last_name'] ?> <?php echo $examinee['first_name'] ?> <?php echo $examinee['middle_name'] ?>
                                                 </td>
                                                 <td>
-                                                    <a href="#" data-toggle="modal" data-target="#examination_result_modal_<?php echo $result['id']; ?>">
+                                                    <a href="examination_result_details.php?result_id<?php echo $result["id"]; ?>">
                                                         EXAM-<?php echo $result['exam_code'] ?>
                                                     </a>
                                                 </td>

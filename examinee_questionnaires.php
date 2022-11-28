@@ -5,7 +5,11 @@ require_once "includes/config.php";
 // Initialize the session
 session_start();
 
-$questionnaires_sql = "SELECT * FROM questionnaires";
+$user_id = $_SESSION["id"];
+
+$questionnaires_sql = "SELECT * FROM questionnaires
+    JOIN examination_result ON questionnaires.id = examination_result.questionnaire_id
+    WHERE examinee_id != $user_id";
 $questionnaires_result = mysqli_query($link, $questionnaires_sql);
 $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
 
@@ -59,7 +63,9 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                     </div>
 
                     <div class="row">
-                        <?php foreach($questionnaires as $questionnaire) {
+                        <?php
+                        if (array_filter($questionnaires) !== []) { 
+                            foreach($questionnaires as $questionnaire) {
                                 $settings =json_decode($questionnaire['settings']);
                             ?>
                             <div class="col-md-6">
@@ -124,6 +130,11 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                                     </div>
                                 </div>
                             </div>
+                        <?php } 
+                        } else { ?>
+                            <div class="alert alert-primary" role="alert">
+                                No available questionnaire(s).
+                            </div>
                         <?php } ?>
                     </div>
                 </div>
@@ -135,39 +146,6 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- Add New Student Modal-->
-    <div class="modal fade" id="add_department" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Department</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                    <div class="modal-body">
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="course">Department</label>
-                                    <input type="text" name="department" class="form-control" id="department" required>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" name="add_department" class="btn btn-primary">
-                            <i class="fas fa-plus"></i>
-                            Add
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <?php include 'includes/scripts.php'; ?>
     <?php include 'includes/background.php'; ?>

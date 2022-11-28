@@ -284,7 +284,7 @@ if (isset($_POST['save_settings'])) {
                 var $questionNumber = $target.find("#question-number").val();
                 var $contentPanel = $target.find('div#child-panel-' + $questionNumber);
 
-                var $points = $('<div class="col-md-6 mt-2">\
+                var $points = $('<div class="col-md-3 mt-2">\
                     <div class="mb-3">\
                         <label class="form-label">Points for correct answer</label>\
                         <input type="number" class="form-control" name="points[]" placeholder="" required>\
@@ -362,14 +362,21 @@ if (isset($_POST['save_settings'])) {
                 } else if (selected == 4) {
                     var $content = $('<div class="col-md-12">\
                         <div class="form-group">\
+                            <div class="form-group">\
+                                <input type="hidden" name="option" class="form-control mb-3" value="True">\
+                            </div>\
+                            <div class="form-group">\
+                                <input type="hidden" name="option" class="form-control mb-3" value="False">\
+                            </div>\
                             <label for="answer">Answer</label>\
                             <select name="answer[]" class="form-control" required>\
-                                <option value="1" selected>TRUE</option>\
-                                <option value="2">FALSE</option>\
+                                <option value="1" selected>True</option>\
+                                <option value="2">False</option>\
                             </select>\
                         </div>\
                     </div>');
                     $content.appendTo($contentPanel);
+                    $('input[name="option"]').attr("name",  $questionNumber+ "[]");
                     $points.appendTo($contentPanel);
                 }
             });

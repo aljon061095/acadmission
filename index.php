@@ -61,7 +61,7 @@
                     </div>
 
                     <!-- Content Row -->
-                    <?php  if (isset($_SESSION["user"]) && $_SESSION["user"] === "professor") { ?>
+                    <?php  if (isset($_SESSION["user"]) && $_SESSION["user"] === "professor" || $_SESSION["user"] === "admin") { ?>
                     <div class="row">
 
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -249,7 +249,7 @@
                             <!-- Approach -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Acadmission</h6>
                                 </div>
                                 <div class="card-body">
                                     <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce

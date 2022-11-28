@@ -55,7 +55,7 @@ $exam_results = $examination_result->fetch_all(MYSQLI_ASSOC);
                                         <?php foreach($exam_results as $result) { ?>
                                             <tr>
                                                 <td>
-                                                    <a href="#" data-toggle="modal" data-target="#examination_result_modal_<?php echo $result['id']; ?>">
+                                                    <a href="examination_result_details.php?result_id=<?php echo $result["id"]; ?>">
                                                         EXAM-<?php echo $result['exam_code'] ?>
                                                     </a>
                                                 </td>
@@ -95,6 +95,27 @@ $exam_results = $examination_result->fetch_all(MYSQLI_ASSOC);
                         </div>
                     </div>
 
+                    <div class="row">
+                         <!-- Donut Chart -->
+                         <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Donut Chart</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4">
+                                        <canvas id="myPieChart"></canvas>
+                                    </div>
+                                    <hr>
+                                    Styling for the donut chart can be found in the
+                                    <code>/js/demo/chart-pie-demo.js</code> file.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -104,122 +125,6 @@ $exam_results = $examination_result->fetch_all(MYSQLI_ASSOC);
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- Add New Student Modal-->
-    <div class="modal fade" id="add_new_student" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="last_name">Last Name</label>
-                                    <input type="text" name="last_name" class="form-control" id="last_name" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="first_name">First Name</label>
-                                    <input type="text" name="first_name" class="form-control" id="first_name" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="middle_name">Middle Name</label>
-                                    <input type="text" name="middle_name" class="form-control" id="middle_name" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="address">Address</label>
-                                    <input type="text" name="address" class="form-control" id="address" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div>
-                                    <label for="gender">Gender</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" value="male" checked>
-                                    <label class="form-check-label" for="inlineRadio1">Male</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="female" value="female">
-                                    <label class="form-check-label" for="inlineRadio2">Female</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="gender" id="other" value="other">
-                                    <label class="form-check-label" for="inlineRadio3">Other</label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="last_name">Email Address</label>
-                                    <input type="email" name="email_address" class="form-control" id="email_address" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password" required>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="phone_number">Phone Number</label>
-                                    <input type="number" name="phone_number" class="form-control" id="phone_number" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="first_choice">First Choice</label>
-                                    <select id="first_choice" class="form-control">
-                                        <option value="" selected>Choose your first course...</option>
-                                        <option>...</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="second_choice">Second Choice</label>
-                                    <select id="second_choice" class="form-control">
-                                        <option value="" selected>Choose your second course...</option>
-                                        <option>...</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Submit</a>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <?php include 'includes/scripts.php'; ?>
     <?php include 'includes/background.php'; ?>

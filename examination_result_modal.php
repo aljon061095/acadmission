@@ -51,7 +51,7 @@
                                 <span><?php echo $result_details['total_points'] ?></span>
                             </div>
                         </div>
-                    </div>
+                    </div>                
                 </div>
             </form>
         </div>

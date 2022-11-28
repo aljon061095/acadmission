@@ -46,7 +46,7 @@ $departments = $result->fetch_all(MYSQLI_ASSOC);
       <div class="logo mr-auto">
         <h1 class="text-light">
           <a href="landing.php">
-            <img class="p-0" src="images/logo.png" />
+            <!-- <img class="p-0" src="images/logo.png" /> -->
             <span class="mt-4">Acadmission</span>
           </a>
         </h1>
@@ -281,7 +281,7 @@ $departments = $result->fetch_all(MYSQLI_ASSOC);
   <footer id="footer">
     <div class="container py-4">
       <div class="copyright text-center">
-        Copyright &copy; <strong><span><a href="">Acadmission</a></span></strong>
+        Copyright &copy; <strong><span><a href="admin_login.php">Acadmission</a></span></strong>
       </div>
       <div class="credits">
         Online Examination System - <?php echo date("Y"); ?>

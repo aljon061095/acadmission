@@ -58,6 +58,7 @@ $examinees = $examinee_result->fetch_all(MYSQLI_ASSOC);
                                             <th>Phone Number</th>
                                             <th>First Choice</th>
                                             <th>Second Choice</th>
+                                            <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -87,13 +88,14 @@ $examinees = $examinee_result->fetch_all(MYSQLI_ASSOC);
                                                     ?>
                                                     <?php echo $second_course['course']; ?>
                                                 </td>
+                                                <td><?php echo $examinee['status'] ?></td>
                                                 <td>
                                                     <a href="#" class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#update_examinee_<?php echo $examinee['id']; ?>">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </a>
-                                                    <a href="#" class="btn btn-danger btn-circle btn-sm">
+                                                    <button type="button" class="btn btn-danger btn-circle btn-sm delete" data-id="<?php echo $examinee['id']; ?>" data-table-name="examinee">
                                                         <i class="fas fa-trash"></i>
-                                                    </a>
+                                                    </button>
                                                 </td>
                                                 <?php include 'update_examinee.php'; ?>
                                             </tr>
