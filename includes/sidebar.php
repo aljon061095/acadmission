@@ -8,7 +8,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center mb-4" href="index.php">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center mb-4" href="dashboard.php">
         <div class="sidebar-brand-text mx-3">
             <img src="uploads/<?php echo $settings['system_logo']; ?>" alt="<?php echo $settings['system_name']; ?>" width="50" style="margin-top: 1rem;"/>
             <span style="word-break: break-word;"><?php echo $settings["system_name"]; ?></span>
@@ -20,7 +20,7 @@
 
     <?php  if (isset($_SESSION["user"]) && $_SESSION["user"] === "admin") { ?>
         <li class="nav-item <?php if ($_SERVER['PHP_SELF'] == '/acadmission/dashboard.php') { ?>active <?php } ?>">
-            <a class="nav-link" href="index.php">
+            <a class="nav-link" href="dashboard.php">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -92,7 +92,7 @@
 
     <?php  if (isset($_SESSION["user"]) && $_SESSION["user"] === "professor") { ?>
         <li class="nav-item <?php if ($_SERVER['PHP_SELF'] == '/acadmission/dashboard.php') { ?>active <?php } ?>">
-            <a class="nav-link" href="index.php">
+            <a class="nav-link" href="dashboard.php">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -149,7 +149,7 @@
 
     <?php  if (isset($_SESSION["user"]) && $_SESSION["user"] === "examinee") { ?>
         <li class="nav-item <?php if ($_SERVER['PHP_SELF'] == '/acadmission/dashboard.php') { ?>active <?php } ?>">
-            <a class="nav-link" href="index.php">
+            <a class="nav-link" href="dashboard.php">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -170,6 +170,12 @@
             <a class="nav-link" href="examination_result.php">
                 <i class="fas fa-fw fa-list"></i>
                 <span>Examination Result</span></a>
+        </li>
+
+        <li class="nav-item <?php if ($_SERVER['PHP_SELF'] == '/acadmission/course_recommendation.php') { ?>active <?php } ?>">
+            <a class="nav-link" href="course_recommendation.php">
+                <i class="fas fa-fw fa-star"></i>
+                <span>Course Recommendation</span></a>
         </li>
     <?php } ?>
 

@@ -4,7 +4,7 @@ session_start();
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-    header("location: index.php");
+    header("location: dashboard.php");
     exit;
 }
 
@@ -66,7 +66,7 @@ if (isset($_POST['login_examinee'])) {
                             $_SESSION["username"] = $email_address;
                             $_SESSION["user"] = "examinee";
 
-                            header("location: index.php");
+                            header("location: dashboard.php");
                         } else {
                             $_SESSION['login_err'] = 'Invalid email address or password';
                         }

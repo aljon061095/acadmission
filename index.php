@@ -1,289 +1,307 @@
-<?php 
-    // Include config file
-    require_once "includes/config.php";
+<?php
+//Include config file
+require_once "includes/config.php";
 
-    // Initialize the session
-    session_start();
-
-   // Check if the user is already logged in, if yes then redirect him to welcome page
-    if(!isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] !== true){
-        header("location: login.php");
-        exit;
-    }
-
-    //get questionnnires count
-    $questionnaires_sql = "SELECT * FROM questionnaires";
-    $questionnaires_result = mysqli_query($link, $questionnaires_sql);
-    $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
-
-    //get examinees count
-    $examinee_sql = "SELECT * FROM examinee";
-    $examinee_result = mysqli_query($link, $examinee_sql);
-    $examinees = $examinee_result->fetch_all(MYSQLI_ASSOC);
-
-    //get courses count
-    $courses_sql = "SELECT * FROM courses";
-    $courses_result = mysqli_query($link, $courses_sql);
-    $courses = $courses_result->fetch_all(MYSQLI_ASSOC);
-
-    //get courses count
-    $department_sql = "SELECT * FROM department";
-    $department_result = mysqli_query($link, $department_sql);
-    $departments = $department_result->fetch_all(MYSQLI_ASSOC);
+$sql = "SELECT * FROM department";
+$result = mysqli_query($link, $sql);
+$departments = $result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
-<?php include 'includes/header.php'; ?>
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<body id="page-top">
-    <?php include 'includes/preloader.php'; ?>
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+  <title>Acadmission - Online Examination System</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
 
-        <?php include 'includes/sidebar.php'; ?>
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="16x16" href="images/logo.png">
+  <link href="landing-assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+  <!-- Google Fonts -->
+  <link href="css/acadmission.css" rel="stylesheet">
 
-            <!-- Main Content -->
-            <div id="content">
+  <!-- Vendor CSS Files -->
+  <link href="landing-assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="landing-assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="landing-assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="landing-assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="landing-assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="landing-assets/vendor/aos/aos.css" rel="stylesheet">
 
-                <?php include 'includes/navbar.php'; ?>
+  <!-- Template Main CSS File -->
+  <link href="landing-assets/css/landing.css" rel="stylesheet">
+</head>
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+<body>
 
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-                    </div>
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top  header-transparent ">
+    <div class="container d-flex align-items-center">
 
-                    <!-- Content Row -->
-                    <?php  if (isset($_SESSION["user"]) && $_SESSION["user"] === "professor" || $_SESSION["user"] === "admin") { ?>
-                    <div class="row">
+      <div class="logo mr-auto">
+        <h1 class="text-light">
+          <a href="index.php">
+            <!-- <img class="p-0" src="images/logo.png" /> -->
+            <span class="mt-4">Acadmission</span>
+          </a>
+        </h1>
+      </div>
 
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Questionnaires
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count($questionnaires); ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-file fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                               Examinees
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count($examinees); ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-users fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                               Courses
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count($courses); ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-star fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                               Department
-                                            </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count($departments); ?></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-building fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php  } ?>
-
-                    <?php  if (isset($_SESSION["user"]) && $_SESSION["user"] === "examinee") { ?>
-                        <div class="row">
-                            <div class="col-xl-4 col-md-6 mb-4">
-                                <div class="card border-left-primary shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                    Questionnaires
-                                                </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count($questionnaires); ?></div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-file fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-4 col-md-6 mb-4">
-                                <div class="card border-left-info shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                Courses
-                                                </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count($courses); ?></div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-star fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-xl-4 col-md-6 mb-4">
-                                <div class="card border-left-warning shadow h-100 py-2">
-                                    <div class="card-body">
-                                        <div class="row no-gutters align-items-center">
-                                            <div class="col mr-2">
-                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Department
-                                                </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo count($departments); ?></div>
-                                            </div>
-                                            <div class="col-auto">
-                                                <i class="fas fa-building fa-2x text-gray-300"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php  } ?>
-
-
-                    <!-- Content Row -->
-                    <div class="row">
-
-                        <!-- Content Column -->
-                        <div class="col-lg-6 mb-4">
-
-                            <!-- Project Card Example -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Summary Results</h6>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="small font-weight-bold">Passed <span
-                                            class="float-right">50%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 50%"
-                                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Failed <span
-                                            class="float-right">40%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
-                                            aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Slot Availability <span
-                                            class="float-right">60%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar" role="progressbar" style="width: 60%"
-                                            aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Examiners <span
-                                            class="float-right">90%</span></h4>
-                                    <div class="progress mb-4">
-                                        <div class="progress-bar bg-info" role="progressbar" style="width: 90%"
-                                            aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                    <h4 class="small font-weight-bold">Account Setup <span
-                                            class="float-right">Complete!</span></h4>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
-                                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-lg-6 mb-4">
-
-                            <!-- Approach -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Acadmission</h6>
-                                </div>
-                                <div class="card-body">
-                                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                        CSS bloat and poor page performance. Custom CSS classes are used to create
-                                        custom components and custom utility classes.</p>
-                                    <p class="mb-0">Before working with this theme, you should become familiar with the
-                                        Bootstrap framework, especially the utility classes.</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-          <?php include 'includes/footer.php'; ?>
-
-        </div>
-        <!-- End of Content Wrapper -->
+      <nav class="nav-menu d-none d-lg-block">
+        <ul>
+          <li><a href="#features">Site Features</a></li>
+          <li><a href="#testimonials">Programs</a></li>
+          <li><a href="#faq">F.A.Q.</a></li>
+          <li class="register">
+            <a href="professor_login.php">
+              Professor Login
+            </a>
+          </li>
+          <li class="login">
+            <a href="login.php">
+              Student Login
+            </a>
+          </li>
+        </ul>
+      </nav><!-- .nav-menu -->
 
     </div>
-    <!-- End of Page Wrapper -->
+  </header><!-- End Header -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+  <section id="hero" class="d-flex align-items-center">
 
-   <?php include 'includes/scripts.php'; ?>
-   <?php include 'includes/background.php'; ?>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1" data-aos="fade-up">
+          <div>
+            <h1>Online Examination System</h1>
+            <h2>Easy, convenient and user-friendly examination system!</h2>
+          </div>
+        </div>
+        <div class="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 hero-img" data-aos="fade-up">
+          <img src="landing-assets/img/exam-landing.png" class="img-fluid" alt="">
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <main id="main">
+
+    <section id="features" class="features">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Site Features</h2>
+          <p>
+            Below are the list of features that this system can provide
+          </p>
+        </div>
+
+        <div class="row no-gutters">
+          <div class="col-xl-7 d-flex align-items-stretch order-2 order-lg-1">
+            <div class="content d-flex flex-column justify-content-center">
+              <div class="row">
+                <div class="col-md-6 icon-box" data-aos="fade-up">
+                  <i class="bx bx-spreadsheet"></i>
+                  <h4>Create departments and courses</h4>
+                  <p>Admin and Instructor can create departments and courses</p>
+                </div>
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
+                  <i class="bx bx-cog"></i>
+                  <h4>Site settings</h4>
+                  <p>Admin can have an access on site settings (change themes, logo and name)</p>
+                </div>
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="200">
+                  <i class="bx bx-message"></i>
+                  <h4>Test Questionnaires</h4>
+                  <p>Admin and Instructor can create test questionnaires</p>
+                </div>
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="300">
+                  <i class="bx bx-question-mark"></i>
+                  <h4>Examination</h4>
+                  <p>Students can take examination</p>
+                </div>
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="400">
+                  <i class="bx bx-stats"></i>
+                  <h4>Results and Recommendation</h4>
+                  <p>Students can view exam result, ratings and recommendation.</p>
+                </div>
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="500">
+                  <i class="bx bx-id-card"></i>
+                  <h4>User accounts</h4>
+                  <p>Admin and Instructor can create students/users.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="image col-xl-5 d-flex align-items-stretch justify-content-center order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">
+            <img src="landing-assets/img/features.png" class="img-fluid" alt="">
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End App Features Section -->
+
+    <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Programs Offered</h2>
+          <p>Make the best decision in choosing the right path for you, click through the list of programs offered by Systems Plus College Foundation below.</p>
+        </div>
+
+        <div class="owl-carousel testimonials-carousel" data-aos="fade-up">
+          <?php if (array_filter($departments) != []) {
+            foreach ($departments as $key => $department) { ?>
+              <div class="testimonial-wrap">
+                <div class="testimonial-item">
+                  <img src="landing-assets/img/department/<?php echo $key; ?>.jpg" class="testimonial-img" alt="">
+                  <h3 class="text-center"><?php echo $department["department"]; ?></h3>
+                  <p style="word-wrap: break-word;">
+                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                    <?php
+                        $department_id = $department['id'];
+                        $course_result = mysqli_query($link, "SELECT *
+                            FROM courses WHERE department_id = $department_id");
+                        $courses = $course_result->fetch_all(MYSQLI_ASSOC);
+                    ?>
+                    <ul>
+                      <?php foreach($courses as $course) { ?>
+                         <li> <?php echo $course["course"]; ?></li>
+                      <?php } ?>
+                    </ul>
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+          <?php  }
+          } ?>
+        </div>
+
+      </div>
+    </section><!-- End Testimonials Section -->
+
+    <!-- ======= Frequently Asked Questions Section ======= -->
+    <section id="faq" class="faq section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Frequently Asked Questions</h2>
+        </div>
+
+        <div class="accordion-list">
+          <ul>
+            <li data-aos="fade-up">
+              <i class="bx bx-help-circle icon-help"></i>
+              <a data-toggle="collapse" class="collapse" href="#accordion-list">
+                What do you mean by online examination?
+                <i class="bx bx-chevron-down icon-show"></i>
+                <i class="bx bx-chevron-up icon-close"></i>
+              </a>
+              <div id="accordion-list" class="collapse show" data-parent=".accordion-list">
+                <div class="ml-4">
+                  <p>
+                    An online examination system is a computer-based test system that can be used to 
+                    conduct computer based tests online. This examination system uses fewer
+                    resources and reduces the need for question papers and answer scripts, exam room scheduling,
+                    arranging invigilators, coordinating with examiners, and more.
+                  </p>
+                </div>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="50">
+              <i class="bx bx-help-circle icon-help"></i>
+              <a data-toggle="collapse" class="collapsed" href="#accordion-list-1">
+                What are the steps on online examination?
+                <i class="bx bx-chevron-down icon-show"></i>
+                <i class="bx bx-chevron-up icon-close"></i>
+              </a>
+              <div id="accordion-list-1" class="collapse" data-parent=".accordion-list">
+                <div class="ml-4">
+                  <p>1. Register your account by requesting it to the administrator.</p>
+                  <p>2. Find appropriate test questionnaires to your choosen course.</p>
+                  <p>3. Take the examination.</p>
+                  <p>4. View result and ratings.</p>
+                  <p>5. See the course recommendation.</p>
+                </div>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="100">
+              <i class="bx bx-help-circle icon-help"></i>
+              <a data-toggle="collapse" href="#accordion-list-2" class="collapsed">
+                What is the purpose of online examination system?
+                <i class="bx bx-chevron-down icon-show"></i>
+                <i class="bx bx-chevron-up icon-close"></i>
+              </a>
+              <div id="accordion-list-2" class="collapse" data-parent=".accordion-list">
+                <p>
+                The purpose of the online examination system is to test the subject knowledge 
+                of the students. Such a system eliminates logistical hassles and drawbacks
+                in the traditional mode of the pen-and-paper examination. 
+                Students don't have to assemble in the classroom to give the exam.
+                </p>
+              </div>
+            </li>
+
+            <li data-aos="fade-up" data-aos-delay="200">
+              <i class="bx bx-help-circle icon-help"></i>
+              <a data-toggle="collapse" href="#accordion-list-3" class="collapsed">
+                What is the main advantage of examination?
+                <i class="bx bx-chevron-down icon-show"></i>
+                <i class="bx bx-chevron-up icon-close"></i>
+              </a>
+              <div id="accordion-list-3" class="collapse" data-parent=".accordion-list">
+                <div class="ml-4">
+                 <p>
+                  This competition encourages students to work harder and acts as a motivation for them. 
+                  The most significant part is that students learn to manage 
+                  competition which they are unquestionably going to face later in life.
+                 </p>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+        </div>
+
+      </div>
+    </section><!-- End Frequently Asked Questions Section -->
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container py-4">
+      <div class="copyright text-center">
+        Copyright &copy; <strong><span><a href="admin_login.php">Acadmission</a></span></strong>
+      </div>
+      <div class="credits">
+        Online Examination System - <?php echo date("Y"); ?>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="landing-assets/vendor/jquery/jquery.min.js"></script>
+  <script src="landing-assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="landing-assets/vendor/jquery.easing/jquery.easing.min.js"></script>
+  <script src="landing-assets/vendor/php-email-form/validate.js"></script>
+  <script src="landing-assets/vendor/owl.carousel/owl.carousel.min.js"></script>
+  <script src="landing-assets/vendor/venobox/venobox.min.js"></script>
+  <script src="landing-assets/vendor/aos/aos.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="landing-assets/js/main.js"></script>
 
 </body>
 

@@ -9,35 +9,20 @@ $question_category_sql = "SELECT * FROM question_types";
 $question_types_result = mysqli_query($link, $question_category_sql);
 $question_types = $question_types_result->fetch_all(MYSQLI_ASSOC);
 
-// //adding courses
-// if (isset($_POST['add_course'])) {
-//     $department_id = $_POST['department_id'];
-//     $course = $_POST['course'];
-//     $status = 1;
+//adding courses
+if (isset($_POST['add_question_type'])) {
+    $type = $_POST['question_type'];
 
-//     $query = "INSERT INTO courses(department_id, course, status)
-//             VALUES ('$department_id', '$course', '$status')";
-//     $query_run = mysqli_query($link, $query);
+    $query = "INSERT INTO question_types(type)
+            VALUES ('$type')";
+    $query_run = mysqli_query($link, $query);
 
-//     if ($query_run) {
-//         $_SESSION['success_status'] = "You have successfully added a new course.";
-//         header("location: manage_course.php");
-//     }
-// }
-
-// if (isset($_POST['update_course'])) {
-//     $course_id = $_POST['course_id'];
-//     $course = $_POST['course'];
-
-//     $query = "UPDATE course SET course = $course WHERE id = $course_id";
-//     $query_run = mysqli_query($link, $query);
-
-//     if ($query_run) {
-//         $_SESSION['success_status'] = "You have successfully update the course.";
-//         header("location: manage_course.php");
-//     }
-// }
-// ?>
+    if ($query_run) {
+        $_SESSION['success_status'] = "You have successfully added a new question type.";
+        header("location: admin_question_category.php");
+    }
+}
+ ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -144,14 +129,14 @@ $question_types = $question_types_result->fetch_all(MYSQLI_ASSOC);
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="course">Question Type</label>
-                                    <input type="text" name="course" class="form-control" id="course" required>
+                                    <label for="question_type">Question Type</label>
+                                    <input type="text" name="question_type" class="form-control" id="question_type" required>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" name="add_course" class="btn btn-primary">
+                        <button type="submit" name="add_question_type" class="btn btn-primary">
                             <i class="fas fa-plus"></i>
                             Add
                         </button>

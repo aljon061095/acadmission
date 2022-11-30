@@ -58,13 +58,13 @@ $exam_results = $examination_result->fetch_all(MYSQLI_ASSOC);
                                                     <?php 
                                                         $examinee_id = $result['examinee_id'];
                                                         $examinee_result = mysqli_query($link, "SELECT *
-                                                            FROM examinee WHERE id = $examinee_id");
+                                                            FROM examinee WHERE examinee_id = $examinee_id");
                                                         $examinee = mysqli_fetch_array($examinee_result)
                                                     ?>
                                                     <?php echo $examinee['last_name'] ?> <?php echo $examinee['first_name'] ?> <?php echo $examinee['middle_name'] ?>
                                                 </td>
                                                 <td>
-                                                    <a href="examination_result_details.php?result_id<?php echo $result["id"]; ?>">
+                                                    <a href="examination_result_details.php?result_id=<?php echo $result["id"]; ?>&examinee_id=<?php echo $examinee_id ?>">
                                                         EXAM-<?php echo $result['exam_code'] ?>
                                                     </a>
                                                 </td>
