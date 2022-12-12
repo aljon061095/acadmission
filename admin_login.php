@@ -100,7 +100,7 @@ if (isset($_POST['login_admin'])) {
 
 <body class="main-bg-primary">
     <div class="container">
-        <div class="col-md-10 ml-auto col-xl-6 mr-auto">
+        <div class="col-md-10 ml-auto col-xl-8 mr-auto">
             <!-- Nav tabs -->
             <div class="card p-3">
                 <div class="mt-2">
@@ -129,7 +129,7 @@ if (isset($_POST['login_admin'])) {
                                     <h4 class="h4 text-gray-900 mb-4">Login your account</h4>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="email_address" class="form-control form-control-user" placeholder="Email Address">
+                                    <input type="text" name="username" class="form-control form-control-user" placeholder="Username">
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="password" class="form-control form-control-user" placeholder="Password">

@@ -31,11 +31,12 @@ if (isset($_POST['save_examinee'])) {
         $email_address = $_POST['email_address'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $phone_number = $_POST['phone_number'];
+        $strand_id = $_POST['strand_id'];
         $first_choice = $_POST['first_choice'];
         $status = 1;
 
-        $query = "INSERT INTO examinee(last_name, first_name, middle_name, address, gender, email_address, password, phone_number, first_choice, status)
-                    VALUES ('$last_name', '$first_name', '$middle_name', '$address', '$gender', '$email_address' , '$password', '$phone_number', '$first_choice' , '$status')";
+        $query = "INSERT INTO examinee(last_name, first_name, middle_name, address, gender, email_address, password, phone_number, first_choice, strand_id, status)
+                    VALUES ('$last_name', '$first_name', '$middle_name', '$address', '$gender', '$email_address' , '$password', '$phone_number', '$first_choice' , '$strand_id', '$status')";
         $query_run = mysqli_query($link, $query);
 
         if ($query_run) {

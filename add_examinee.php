@@ -12,6 +12,10 @@
     $courses_result = mysqli_query($link, $courses_sql);
     $courses = $courses_result->fetch_all(MYSQLI_ASSOC);
 
+    $strands_sql = "SELECT * FROM strands";
+    $strands_result = mysqli_query($link, $strands_sql);
+    $strands = $strands_result->fetch_all(MYSQLI_ASSOC);
+
     // if (isset($_POST['save_examinee'])) {
     //     $last_name = $_POST['last_name'];
     //     $first_name = $_POST['first_name'];
@@ -141,11 +145,11 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="first_choice">K12 Strands</label>
-                                            <select name="first_choice" id="first_choice" class="form-control" required>
-                                                <option value="" selected>Choose Course...</option>
-                                                <?php foreach ($courses as $course) { ?>
-                                                    <option value="<?php echo $course['id']; ?>"><?php echo $course['course']; ?></option>
+                                            <label for="strand_id">K12 Strands</label>
+                                            <select name="strand_id" id="strand_id" class="form-control" required>
+                                                <option value="" selected>Choose Strands...</option>
+                                                <?php foreach ($strands as $strand) { ?>
+                                                    <option value="<?php echo $strand['id']; ?>"><?php echo $strand['strand'];?> (<?php echo $strand['acronym']; ?>)</option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -188,7 +192,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <a class="btn btn-primary" href="login.php">Logout</a>
                 </div>
             </div>
         </div>

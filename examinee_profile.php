@@ -6,28 +6,35 @@ require_once "includes/config.php";
 session_start();
 
 $user_id = $_SESSION["id"];
-$user_sql = "SELECT * FROM users WHERE id = $user_id";
+
+$user_sql = "SELECT * FROM examinee WHERE examinee_id = $user_id";
 $user_result = mysqli_query($link, $user_sql);
 $user = $user_result->fetch_array(MYSQLI_ASSOC);
 
 //adding courses
-if (isset($_POST['update_profile'])) {
+if (isset($_POST['update_examinee_profile'])) {
     $first_name = $_POST['first_name'];
+    $middle_name = $_POST['middle_name'];
     $last_name = $_POST['last_name'];
     $email_address = $_POST['email_address'];
-    $username = $_POST['username'];
+    $address = $_POST['address'];
+    $gender = $_POST['gender'];
+    $gender = $_POST['gender'];
 
-    $query = "UPDATE users SET 
-        first_name = '$first_name', 
-        last_name = '$last_name', 
-        email_address = '$email_address',
-        username = '$username'
-        WHERE id = $user_id";
+    $query = "UPDATE examinee SET 
+            first_name = '$first_name',
+            middle_name = '$middle_name',
+            last_name = '$last_name',
+            email_address = '$email_address',
+            address = '$address',
+            gender = '$gender',
+            phone_number = '$phone_number'
+            WHERE examinee_id = $user_id";
     $query_run = mysqli_query($link, $query);
 
     if ($query_run) {
-        $_SESSION['success_status'] = "You have successfully update ypur profile information.";
-        header("location: profile.php");
+        $_SESSION['success_status'] = "You have successfully update your profile information.";
+        header("location: examinee_profile.php");
     }
 }
 ?>
@@ -50,36 +57,27 @@ if (isset($_POST['update_profile'])) {
                 <div class="container-fluid">
                     <div class="container">
                         <div class="row gutters">
-                            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="account-settings">
-                                            <div class="user-profile">
-                                                <div class="user-avatar">
-                                                    <img src="uploads/<?php echo $user['profile']; ?>" alt="<?php echo $user['username']; ?>">
-                                                </div>
-                                                <h5 class="user-name"><?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?></h5>
-                                                <h6 class="user-email"><?php echo $user['email_address']; ?></h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="card h-100">
                                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="user">
                                         <div class="card-body">
                                             <div class="row gutters">
                                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                                    <h6 class="mb-2 text-primary">Personal Details</h6>
+                                                    <h4 class="mb-4 text-primary">Personal Details</h4>
                                                 </div>
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                                     <div class="form-group">
-                                                        <label for="lastName">First Name</label>
+                                                        <label for="firstname">First Name</label>
                                                         <input type="text" class="form-control" id="first_name" name="first_name" value="<?php echo $user["first_name"]; ?>" placeholder="Enter full name">
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                                    <div class="form-group">
+                                                        <label for="lastName">Middle Name</label>
+                                                        <input type="text" class="form-control" id="middle_name" name="middle_name" value="<?php echo $user["middle_name"]; ?>" placeholder="Enter full name">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                                     <div class="form-group">
                                                         <label for="lastName">Last Name</label>
                                                         <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo $user["last_name"]; ?>" placeholder="Enter full name">
@@ -87,21 +85,33 @@ if (isset($_POST['update_profile'])) {
                                                 </div>
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                     <div class="form-group">
-                                                        <label for="eMail">Email</label>
-                                                        <input type="email" class="form-control" id="email" name="email_address" value="<?php echo $user["email_address"]; ?>" placeholder="Enter email ID">
+                                                        <label for="email">Email</label>
+                                                        <input type="email" class="form-control" id="email" name="emai_address" value="<?php echo $user["email_address"]; ?>" placeholder="Enter email ID">
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
                                                     <div class="form-group">
-                                                        <label for="username">Username</label>
-                                                        <input type="text" class="form-control" id="username" name="username" value="<?php echo $user["username"]; ?>" placeholder="Enter phone number">
+                                                        <label for="address">Address</label>
+                                                        <input type="text" class="form-control" id="address" name="address" value="<?php echo $user["address"]; ?>" placeholder="Enter phone number">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="gender">Gender</label>
+                                                        <input type="text" class="form-control" id="gender" name="gender" value="<?php echo $user["gender"]; ?>" placeholder="Enter phone number">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="form-group">
+                                                        <label for="phone_number">Phone Number</label>
+                                                        <input type="number" class="form-control" id="number" name="phone_number" value="<?php echo $user["phone_number"]; ?>" placeholder="Enter phone number">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row gutters">
                                                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                                     <div class="text-right">
-                                                        <button type="button" id="submit" name="update_profile" class="btn btn-primary">Update</button>
+                                                        <button type="button" id="submit" name="update_examinee_profile" class="btn btn-primary">Update</button>
                                                     </div>
                                                 </div>
                                             </div>

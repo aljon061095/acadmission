@@ -7,7 +7,8 @@ session_start();
 
 $examinee_id = $_SESSION["id"];
 $course_rec_sql = "SELECT * FROM examinee
-            JOIN courses ON examinee.first_choice = courses.id
+            JOIN strands ON examinee.strand_id = strands.id
+            JOIN courses ON examinee.strand_id = courses.strand_id
             JOIN department ON courses.department_id = department.id
             WHERE examinee_id = $examinee_id";
 $course_rec_result = mysqli_query($link, $course_rec_sql);
