@@ -13,9 +13,10 @@ $temp_password = $_SESSION["pass"];
 if (isset($_POST['save_examinee'])) {
 
     var_dump($_POST);
+    $email_address = $_POST['email_address'];
 
-    $sql = "select * from examinee where (email='$email');";
-    $res = mysqli_query($mysqli, $sql);
+    $sql = "select * from examinee where (email_address='$email_address');";
+    $res = mysqli_query($link, $sql);
 
     if (mysqli_num_rows($res) > 0) {
         $row = mysqli_fetch_assoc($res);
@@ -32,11 +33,10 @@ if (isset($_POST['save_examinee'])) {
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $phone_number = $_POST['phone_number'];
         $strand_id = $_POST['strand_id'];
-        $first_choice = $_POST['first_choice'];
         $status = 1;
 
-        $query = "INSERT INTO examinee(last_name, first_name, middle_name, address, gender, email_address, password, phone_number, first_choice, strand_id, status)
-                    VALUES ('$last_name', '$first_name', '$middle_name', '$address', '$gender', '$email_address' , '$password', '$phone_number', '$first_choice' , '$strand_id', '$status')";
+        $query = "INSERT INTO examinee(last_name, first_name, middle_name, address, gender, email_address, password, phone_number, strand_id, status)
+                    VALUES ('$last_name', '$first_name', '$middle_name', '$address', '$gender', '$email_address' , '$password', '$phone_number' , '$strand_id', '$status')";
         $query_run = mysqli_query($link, $query);
 
         if ($query_run) {
@@ -110,7 +110,7 @@ if (isset($_POST['save_examinee'])) {
     $mail->setFrom('systemspluscollegefoundation1@gmail.com', 'SPCF');
 
 
-    $query1 = "SELECT * FROM examinee ORDER BY id DESC LIMIT 1";
+    $query1 = "SELECT * FROM examinee ORDER BY examinee_id DESC LIMIT 1";
     $result = mysqli_query($link, $query1);
 
     if ($result->num_rows > 0) {

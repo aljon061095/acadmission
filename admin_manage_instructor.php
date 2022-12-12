@@ -29,12 +29,46 @@ if (isset($_POST['add_instructor'])) {
     }
 
     $query = "INSERT INTO users(profile, first_name, last_name, email_address, username)
-            VALUES ('$profile', '$first_name', , '$last_name' , '$email_address' , '$username')";
+            VALUES ('$profile', '$first_name', '$last_name' , '$email_address' , '$username')";
     $query_run = mysqli_query($link, $query);
 
     if ($query_run) {
-        $_SESSION['success_status'] = "You have successfully added a new department.";
-        header("location: manage_department.php");
+        $_SESSION['success_status'] = "You have successfully added a new instructor.";
+        header("location: admin_manage_instructor.php");
+    }
+}
+
+if (isset($_POST['update_instructor'])) {
+    $profile = strtotime(date('y-m-d H:i')) . '_' . $_POST['first_name'];
+    $id = $_POST['id'];
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $email_address = $_POST['email_address'];
+    $username = $_POST['username'];
+
+    if (array_key_exists('profile', $_FILES)) {
+        if ($_FILES['profile']['tmp_name'] != '') {
+            $filename = 'profile' . '_' . strtotime(date('y-m-d H:i')) . '_' . basename($_FILES['profile']['name']);
+            $move = move_uploaded_file($_FILES['profile']['tmp_name'], 'uploads/' . $filename);
+
+            if ($move) {
+                $profile = $filename;
+            }
+        }
+    }
+
+    $query = "UPDATE users SET 
+            profile = '$profile',
+            first_name = '$first_name',
+            last_name = '$last_name',
+            email_address = '$email_address',
+            username = '$username'
+            WHERE id = $id"; 
+    $query_run = mysqli_query($link, $query);
+
+    if ($query_run) {
+        $_SESSION['success_status'] = "You have successfully updated a instructor.";
+        header("location: admin_manage_instructor.php");
     }
 }
 ?>

@@ -71,19 +71,19 @@ $examinees = $examinee_result->fetch_all(MYSQLI_ASSOC);
                                                 <td><?php echo $examinee['phone_number'] ?></td>
                                                 <td>
                                                     <?php
-                                                        $first_choice = $examinee['first_choice'];
+                                                        $strand_id = $examinee['strand_id'];
                                                         $result = mysqli_query($link, "SELECT *
-                                                            FROM courses WHERE id = $first_choice");
-                                                        $first_course = mysqli_fetch_array($result);
+                                                            FROM strands WHERE id = $strand_id");
+                                                        $strands = mysqli_fetch_array($result);
                                                     ?>
-                                                    <?php echo $first_course['course']; ?>
+                                                    <?php echo $strands['strand']; ?>
                                                 </td>
                                                 <td><?php echo $examinee['status'] ?></td>
                                                 <td>
-                                                    <a href="#" class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#update_examinee_<?php echo $examinee['examinee_id']; ?>">
+                                                    <!-- <a href="#" class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#update_examinee_<?php echo $examinee['examinee_id']; ?>">
                                                         <i class="fas fa-pencil-alt"></i>
-                                                    </a>
-                                                    <button type="button" class="btn btn-danger btn-circle btn-sm delete" data-id="<?php echo $examinee['examinee_id']; ?>" data-table-name="examinee">
+                                                    </a> -->
+                                                    <button type="button" class="btn btn-danger btn-circle btn-sm examinee-delete" data-id="<?php echo $examinee['examinee_id']; ?>" data-is-examinee="true" data-table-name="examinee">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </td>
@@ -218,3 +218,44 @@ $examinees = $examinee_result->fetch_all(MYSQLI_ASSOC);
 </body>
 
 </html>
+
+<script>
+      $(document).ready(function() {
+         // Delete 
+         $('.examinee-delete').click(function() {
+            var el = this;
+
+            var deleteId = $(this).data('id');
+            var tableName = $(this).data('table-name');
+            var isExaminee = $(this).data('is-examinee');
+
+            var confirmalert = confirm("Are you sure you want to delete?");
+            if (confirmalert == true) {
+               // AJAX Request
+               $.ajax({
+                  url: 'remove.php',
+                  type: 'POST',
+                  data: {
+                     id: deleteId,
+                     tableName: tableName,
+                     isExaminee: isExaminee
+                  },
+                  success: function(response) {
+                     if (response == 1) {
+                        // Remove row from HTML Table
+                        $(el).closest('tr').css('background', 'tomato');
+                        $(el).closest('tr').fadeOut(800, function() {
+                           $(this).remove();
+                        });
+
+                        $('.deleted-message').removeClass('hidden');
+                     }
+
+                  }
+               });
+            }
+
+         });
+
+      });
+   </script>

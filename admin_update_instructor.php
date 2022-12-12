@@ -23,6 +23,7 @@
                          <div class="col-md-6">
                              <div class="form-group">
                                  <label for="first_name">First Name</label>
+                                 <input type="hidden" name="id" value="<?php echo $instructor["id"]; ?>"/>
                                  <input type="text" name="first_name" value="<?php echo $instructor["first_name"]; ?>" class="form-control" id="first_name" required>
                              </div>
                          </div>
