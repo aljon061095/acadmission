@@ -243,7 +243,6 @@ if (isset($_POST['save_settings'])) {
                                                 <option value="2">Mutiple Choices</option>\
                                                 <option value="3">Identification</option>\
                                                 <option value="4">True or False</option>\
-                                                <option value="5">Essay</option>\
                                             </select>\
                                         </div>\
                                         <div id="child-panel" class="child-panel"></div>\

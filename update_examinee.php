@@ -85,21 +85,10 @@ $courses = $courses_result->fetch_all(MYSQLI_ASSOC);
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="first_choice">First Choice</label>
+                                <label for="first_choice">K12 Strand</label>
                                 <select name="first_choice" id="first_choice" class="form-control" required>
                                     <?php foreach ($courses as $course) { ?>
                                         <option value="<?php echo $course['id']; ?>" <?php echo $course['id'] == $examinee['first_choice'] ? "selected" : ""; ?>><?php echo $course['course']; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="second_choice">Second Choice</label>
-                                <select name="second_choice" id="second_choice" class="form-control" required>
-                                    <?php foreach ($courses as $course) { ?>
-                                        <option value="<?php echo $course['id']; ?>" <?php echo $course['id'] == $examinee['second_choice'] ? "selected" : ""; ?>><?php echo $course['course']; ?></option>
                                     <?php } ?>
                                 </select>
                             </div>

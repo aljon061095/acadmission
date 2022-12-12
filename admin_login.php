@@ -35,7 +35,7 @@ if (isset($_POST['login_admin'])) {
     // Validate credentials
     if (empty($username_err) && empty($password_err)) {
         // Prepare a select statement
-        $sql = "SELECT id, username, password, profile FROM users WHERE role = 2 && username = ?";
+        $sql = "SELECT id, username, password, profile, role FROM users WHERE username = ?";
 
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
@@ -52,7 +52,7 @@ if (isset($_POST['login_admin'])) {
                 // Check if username exists, if yes then verify password
                 if (mysqli_stmt_num_rows($stmt) == 1) {
                     // Bind result variables
-                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $profile);
+                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password, $profile, $role);
                     if (mysqli_stmt_fetch($stmt)) {
                         if (password_verify($password, $hashed_password)) {
                             // Password is correct, so start a new session
@@ -65,7 +65,7 @@ if (isset($_POST['login_admin'])) {
                             $_SESSION["id"] = $id;
                             $_SESSION["username"] = $username;
                             $_SESSION["profile"] = $profile;
-                            $_SESSION["user"] = "admin";
+                            $_SESSION["user"] = $role == 2 ? "admin" : "headAdmin";
 
                             header("location: dashboard.php");
                         } else {
@@ -123,15 +123,28 @@ if (isset($_POST['login_admin'])) {
                 </div>
                 <div class="card-body">
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="user">
-                        <div class="form-group">
-                            <input type="text" name="username" class="form-control form-control-user" placeholder="Username">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="text-center">
+                                    <h4 class="h4 text-gray-900 mb-4">Login your account</h4>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="email_address" class="form-control form-control-user" placeholder="Email Address">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" class="form-control form-control-user" placeholder="Password">
+                                </div>
+                                <button type="submit" name="login_admin" class="btn btn-primary btn-user btn-block">
+                                    Login
+                                </button>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <div>
+                                    <h4 class="h4 text-gray-900 mb-4">Scan to Login</h4>
+                                </div>
+                                <img src="./images/login_qr_code.png" width="180" />
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="password" name="password" class="form-control form-control-user" placeholder="Password">
-                        </div>
-                        <button type="submit" name="login_admin" class="btn btn-primary btn-user btn-block">
-                            Login
-                        </button>
                     </form>
                 </div>
             </div>

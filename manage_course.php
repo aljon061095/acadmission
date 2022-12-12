@@ -33,7 +33,7 @@ if (isset($_POST['update_course'])) {
     $course_id = $_POST['course_id'];
     $course = $_POST['course'];
 
-    $query = "UPDATE course SET course = $course WHERE id = $course_id";
+    $query = "UPDATE course SET course = '$course' WHERE id = $course_id";
     $query_run = mysqli_query($link, $query);
 
     if ($query_run) {

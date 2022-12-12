@@ -35,7 +35,7 @@ if (isset($_POST['login_examinee'])) {
     // Validate credentials
     if (empty($email_address_err) && empty($password_err)) {
         // Prepare a select statement
-        $sql = "SELECT id, email_address, password FROM examinee WHERE email_address = ?";
+        $sql = "SELECT examinee_id, email_address, password FROM examinee WHERE email_address = ?";
 
         if ($stmt = mysqli_prepare($link, $sql)) {
             // Bind variables to the prepared statement as parameters
@@ -99,13 +99,10 @@ if (isset($_POST['login_examinee'])) {
 
 <body class="main-bg-primary">
     <div class="container">
-        <div class="col-md-10 ml-auto col-xl-6 mr-auto">
+        <div class="col-md-10 ml-auto col-xl-8 mr-auto">
             <!-- Nav tabs -->
             <div class="card p-3">
                 <div class="mt-2">
-                    <div class="text-center">
-                        <h1 class="h4 text-gray-900 mb-4">Login your account</h1>
-                    </div>
                     <div class="text-center">
                         <?php
                         if (isset($_SESSION['login_err'])) {
@@ -122,15 +119,28 @@ if (isset($_POST['login_examinee'])) {
                 </div>
                 <div class="card-body">
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="user">
-                        <div class="form-group">
-                            <input type="text" name="email_address" class="form-control form-control-user" placeholder="Email Address">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="text-center">
+                                    <h4 class="h4 text-gray-900 mb-4">Login your account</h4>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="email_address" class="form-control form-control-user" placeholder="Email Address">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" class="form-control form-control-user" placeholder="Password">
+                                </div>
+                                <button type="submit" name="login_examinee" class="btn btn-primary btn-user btn-block">
+                                    Login
+                                </button>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <div>
+                                    <h4 class="h4 text-gray-900 mb-4">Scan to Login</h4>
+                                </div>
+                                <img src="./images/login_qr_code.png" width="180" />
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="password" name="password" class="form-control form-control-user" placeholder="Password">
-                        </div>
-                        <button type="submit" name="login_examinee" class="btn btn-primary btn-user btn-block">
-                            Login
-                        </button>
                     </form>
                     <hr>
                     <div class="text-center">

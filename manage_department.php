@@ -28,7 +28,7 @@ if (isset($_POST['update_department'])) {
     $department_id = $_POST['department_id'];
     $department = $_POST['department'];
 
-    $query = "UPDATE department SET department = $department WHERE id = $department_id";
+    $query = "UPDATE department SET department = '$department' WHERE id = $department_id";
     $query_run = mysqli_query($link, $query);
 
     if ($query_run) {
@@ -142,7 +142,7 @@ if (isset($_POST['update_department'])) {
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="course">Department</label>
+                                    <label for="department">Department</label>
                                     <input type="text" name="department" class="form-control" id="department" required>
                                 </div>
                             </div>

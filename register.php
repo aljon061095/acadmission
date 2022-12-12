@@ -100,7 +100,7 @@ if (isset($_POST['register'])) {
                             </form>
                             <hr>
                             <div class="text-center">
-                                <span>Already have an account? <a href="login.php"><strong>Login<strong></a></span>
+                                <span>Already have an account? <a href="professor_login.php"><strong>Login<strong></a></span>
                             </div>
                         </div>
                     </div>

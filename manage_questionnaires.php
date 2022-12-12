@@ -41,70 +41,66 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                             <span class="text">Add New Questionnaries</span>
                         </a>
                     </div>
-
-                    <div class="row">
-                        <?php foreach($questionnaires as $questionnaire) {
-                                $settings =json_decode($questionnaire['settings']);
-                            ?>
-                            <div class="col-md-6">
-                                <div class="card shadow mb-4">
-                                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                        <h6 class="m-0 font-weight-bold text-primary"><?php print $settings->{'name'}; ?></h6>
-                                        <div class="dropdown no-arrow">
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
-                                                <div class="dropdown-header">Dropdown Header:</div>
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <?php print $settings->{'description'}; ?>
-
-                                        <?php
-                                            $course_id = $settings->{'course'};
-                                            $result = mysqli_query($link, "SELECT *
-                                                FROM courses WHERE id = $course_id");
-                                            $course = mysqli_fetch_array($result);
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Examinee List</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Questionnaire's Name</th>
+                                            <th>Description</th>
+                                            <th>Department</th>
+                                            <th>Course</th>
+                                            <th>Date Added</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach($questionnaires as $questionnaire) {
+                                            $settings =json_decode($questionnaire['settings']);
                                         ?>
-
-                                        <?php
-                                            $department_id = $course['department_id'];
-                                            $result = mysqli_query($link, "SELECT *
-                                                FROM department WHERE id = $department_id");
-                                            $department = mysqli_fetch_array($result);
-                                        ?>
-
-                                        <div class="mt-4">
-                                            <span class="badge badge-primary"><?php echo $department['department']; ?></span>
-                                        </div>
-
-                                        <div class="mt-2">
-                                            <span class="badge badge-secondary"><?php echo $course['course']; ?></span>
-                                        </div>
-                                       
-
-                                        <div class="mt-4 float-right">
-                                            <small><strong>Date Added:</strong>
-                                            <?php echo date('m-d-Y', strtotime($questionnaire['date_added'])); ?></small>
-                                        </div>
-                                    </div>
-                                    <div class="card-footer">
-                                        <a href="questionnaires_info.php?questionnaire_id=<?php echo $questionnaire['id'];  ?>" class="btn btn-primary btn-sm float-right">
-                                            <span class="icon text-white-50">
-                                                <i class="fas fa-eye"></i>
-                                            </span>
-                                            <span class="text">View</span>
-                                        </a>
-                                    </div>
-                                </div>
+                                            <tr>
+                                                <td><?php print $settings->{'name'}; ?></td>
+                                                <td><?php print $settings->{'description'}; ?></td>
+                                                <td>
+                                                    <?php
+                                                        $course_id = $settings->{'course'};
+                                                        $result = mysqli_query($link, "SELECT *
+                                                            FROM courses WHERE id = $course_id");
+                                                        $course = mysqli_fetch_array($result);
+                                                    ?>
+                                                    <?php
+                                                        $department_id = $course['department_id'];
+                                                        $result = mysqli_query($link, "SELECT *
+                                                            FROM department WHERE id = $department_id");
+                                                        $department = mysqli_fetch_array($result);
+                                                    ?>
+                                                    <?php echo $department['department']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $course['course']; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo date('m-d-Y', strtotime($questionnaire['date_added'])); ?></small>
+                                                </td>
+                                                <td>
+                                                    <a href="questionnaires_info.php?questionnaire_id=<?php echo $questionnaire['id'];  ?>" class="btn btn-info btn-circle btn-sm">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </a>
+                                                    <button type="button" class="btn btn-danger btn-circle btn-sm delete" data-id="<?php echo $questionnaire['id']; ?>" data-table-name="examinee">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                                <?php include 'update_examinee.php'; ?>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
                             </div>
-                        <?php } ?>
+                        </div>
                     </div>
                 </div>
             </div>

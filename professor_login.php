@@ -100,7 +100,7 @@ if (isset($_POST['login_professor'])) {
 
 <body class="main-bg-primary">
     <div class="container">
-        <div class="col-md-10 ml-auto col-xl-6 mr-auto">
+        <div class="col-md-10 ml-auto col-xl-8 mr-auto">
             <!-- Nav tabs -->
             <div class="card p-3">
                 <div class="mt-2">
@@ -123,15 +123,28 @@ if (isset($_POST['login_professor'])) {
                 </div>
                 <div class="card-body">
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="user">
-                        <div class="form-group">
-                            <input type="text" name="username" class="form-control form-control-user" placeholder="Username">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="text-center">
+                                    <h4 class="h4 text-gray-900 mb-4">Login your account</h4>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="username" class="form-control form-control-user" placeholder="Username">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" class="form-control form-control-user" placeholder="Password">
+                                </div>
+                                <button type="submit" name="login_professor" class="btn btn-primary btn-user btn-block">
+                                    Login
+                                </button>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <div>
+                                    <h4 class="h4 text-gray-900 mb-4">Scan to Login</h4>
+                                </div>
+                                <img src="./images/login_qr_code.png" width="180" />
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <input type="password" name="password" class="form-control form-control-user" placeholder="Password">
-                        </div>
-                        <button type="submit" name="login_professor" class="btn btn-primary btn-user btn-block">
-                            Login
-                        </button>
                     </form>
                     <hr>
                     <div class="text-center">

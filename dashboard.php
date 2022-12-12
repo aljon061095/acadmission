@@ -26,10 +26,15 @@
     $courses_result = mysqli_query($link, $courses_sql);
     $courses = $courses_result->fetch_all(MYSQLI_ASSOC);
 
-    //get courses count
+    //get department count
     $department_sql = "SELECT * FROM department";
     $department_result = mysqli_query($link, $department_sql);
     $departments = $department_result->fetch_all(MYSQLI_ASSOC);
+
+    //get courses count
+    $questions_sql = "SELECT * FROM questions";
+    $questions_result = mysqli_query($link, $questions_sql);
+    $questions = $questions_result->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -249,14 +254,17 @@
                             <!-- Approach -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">Acadmission</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Acadmission Top Question</h6>
                                 </div>
                                 <div class="card-body">
-                                    <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce
-                                        CSS bloat and poor page performance. Custom CSS classes are used to create
-                                        custom components and custom utility classes.</p>
-                                    <p class="mb-0">Before working with this theme, you should become familiar with the
-                                        Bootstrap framework, especially the utility classes.</p>
+                                    <?php 
+                                        foreach($questions as $question) {
+                                    ?>
+                                        <p>
+                                           <?php echo $question["question"]; ?>
+                                        </p>
+                                    <?php } ?>
+                                   
                                 </div>
                             </div>
 

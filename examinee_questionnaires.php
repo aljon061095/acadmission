@@ -132,8 +132,12 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                             </div>
                         <?php } 
                         } else { ?>
-                            <div class="alert alert-primary" role="alert">
-                                No available questionnaire(s).
+                            <div>
+                                <div class="col-lg-12">
+                                    <div class="alert alert-primary" role="alert">
+                                        No available questionnaire(s).
+                                    </div>
+                                </div>
                             </div>
                         <?php } ?>
                     </div>

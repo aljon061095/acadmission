@@ -30,21 +30,21 @@ $examinees = $examinee_result->fetch_all(MYSQLI_ASSOC);
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Manage Examinee</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Manage Qualifiers</h1>
 
                     <div class="mb-3">
                         <a href="add_examinee.php" class="btn btn-success">
                             <span class="icon text-white-50">
                                 <i class="fas fa-plus"></i>
                             </span>
-                            <span class="text">Add New Examinee</span>
+                            <span class="text">Add New Qualifiers</span>
                         </a>
                     </div>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Examinee List</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Qualifiers</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -56,7 +56,7 @@ $examinees = $examinee_result->fetch_all(MYSQLI_ASSOC);
                                             <th>Gender</th>
                                             <th>Email Address</th>
                                             <th>Phone Number</th>
-                                            <th>K12 Strand</th>
+                                            <th>First Choice</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
@@ -80,10 +80,10 @@ $examinees = $examinee_result->fetch_all(MYSQLI_ASSOC);
                                                 </td>
                                                 <td><?php echo $examinee['status'] ?></td>
                                                 <td>
-                                                    <a href="#" class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#update_examinee_<?php echo $examinee['examinee_id']; ?>">
+                                                    <a href="#" class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#update_examinee_<?php echo $examinee['id']; ?>">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </a>
-                                                    <button type="button" class="btn btn-danger btn-circle btn-sm delete" data-id="<?php echo $examinee['examinee_id']; ?>" data-table-name="examinee">
+                                                    <button type="button" class="btn btn-danger btn-circle btn-sm delete" data-id="<?php echo $examinee['id']; ?>" data-table-name="examinee">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </td>
@@ -192,7 +192,7 @@ $examinees = $examinee_result->fetch_all(MYSQLI_ASSOC);
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="first_choice">First Choice</label>
                                     <select id="first_choice" class="form-control">

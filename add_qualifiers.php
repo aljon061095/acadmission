@@ -56,12 +56,12 @@
                 <div class="container-fluid">
 
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Add New Examinee</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Add New Qualifier</h1>
                     </div>
                     <form  method="POST" class="" action="send_email.php">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Add Examinee</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Add Qualifier</h6>
                         </div>
                         <div class="card-body">
                             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
