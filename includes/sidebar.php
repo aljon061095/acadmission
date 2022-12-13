@@ -97,6 +97,12 @@
                 <span>Dashboard</span></a>
         </li>
 
+        <li class="nav-item <?php if ($_SERVER['PHP_SELF'] == '/acadmission/manage_admin.php') { ?>active <?php } ?>">
+            <a class="nav-link" href="manage_admin.php">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Manage Admin</span></a>
+        </li>
+
         <li class="nav-item <?php if ($_SERVER['PHP_SELF'] == '/acadmission/admin_manage_instructor.php') { ?>active <?php } ?>">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#instructor" aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-user"></i>
