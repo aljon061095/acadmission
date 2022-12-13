@@ -32,7 +32,7 @@
     $departments = $department_result->fetch_all(MYSQLI_ASSOC);
 
     //get courses count
-    $questions_sql = "SELECT * FROM questions";
+    $questions_sql = "SELECT * FROM questions LIMIT 10";
     $questions_result = mysqli_query($link, $questions_sql);
     $questions = $questions_result->fetch_all(MYSQLI_ASSOC);
 ?>
