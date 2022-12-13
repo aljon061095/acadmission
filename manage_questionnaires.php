@@ -52,8 +52,8 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                                         <tr>
                                             <th>Questionnaire's Name</th>
                                             <th>Description</th>
-                                            <th>Department</th>
-                                            <th>Course</th>
+                                            <!-- <th>Department</th> -->
+                                            <th>Strands</th>
                                             <th>Date Added</th>
                                             <th>Actions</th>
                                         </tr>
@@ -69,19 +69,10 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                                                     <?php
                                                         $course_id = $settings->{'course'};
                                                         $result = mysqli_query($link, "SELECT *
-                                                            FROM courses WHERE id = $course_id");
+                                                            FROM strands WHERE id = $course_id");
                                                         $course = mysqli_fetch_array($result);
                                                     ?>
-                                                    <?php
-                                                        $department_id = $course['department_id'];
-                                                        $result = mysqli_query($link, "SELECT *
-                                                            FROM department WHERE id = $department_id");
-                                                        $department = mysqli_fetch_array($result);
-                                                    ?>
-                                                    <?php echo $department['department']; ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $course['course']; ?>
+                                                    <?php echo $course['strand']; ?>
                                                 </td>
                                                 <td>
                                                     <?php echo date('m-d-Y', strtotime($questionnaire['date_added'])); ?></small>

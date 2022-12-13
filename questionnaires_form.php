@@ -13,6 +13,10 @@ $courses_sql = "SELECT * FROM courses";
 $courses_result = mysqli_query($link, $courses_sql);
 $courses = $courses_result->fetch_all(MYSQLI_ASSOC);
 
+$strands_sql = "SELECT * FROM strands";
+$strands_result = mysqli_query($link, $strands_sql);
+$strands = $strands_result->fetch_all(MYSQLI_ASSOC);
+
 $question_types_sql = "SELECT * FROM question_types";
 $question_types_result = mysqli_query($link, $question_types_sql);
 $question_types = $question_types_result->fetch_all(MYSQLI_ASSOC);
@@ -112,7 +116,7 @@ if (isset($_POST['save_settings'])) {
                                                             <select name="course" id="course" class="form-control" required>
                                                                 <option value="" selected>Choose Strands...</option>
                                                                 <?php foreach ($strands as $strand) { ?>
-                                                                    <option value="<?php echo $strand['id']; ?>"><?php echo $strand['strand']; ?></option>
+                                                                    <option value="<?php echo $strand['id']; ?>"><?php echo $strand['strand']; ?> - <?php echo $strand['acronym'];   ?></option>
                                                                 <?php } ?>
                                                             </select>
                                                         </div>
