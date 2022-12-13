@@ -7,9 +7,7 @@ session_start();
 
 $user_id = $_SESSION["id"];
 
-$questionnaires_sql = "SELECT * FROM questionnaires
-    JOIN examination_result ON questionnaires.id = examination_result.questionnaire_id
-    WHERE examinee_id != $user_id";
+$questionnaires_sql = "SELECT * FROM questionnaires";
 $questionnaires_result = mysqli_query($link, $questionnaires_sql);
 $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
 
