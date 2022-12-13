@@ -108,11 +108,11 @@ if (isset($_POST['save_settings'])) {
                                                 <div class="row">
                                                     <div class="col-md-12 col-sm-8">
                                                         <div class="form-group">
-                                                            <label for="course">Course</label>
+                                                            <label for="course">Strands</label>
                                                             <select name="course" id="course" class="form-control" required>
-                                                                <option value="" selected>Choose Course...</option>
-                                                                <?php foreach ($courses as $course) { ?>
-                                                                    <option value="<?php echo $course['id']; ?>"><?php echo $course['course']; ?></option>
+                                                                <option value="" selected>Choose Strands...</option>
+                                                                <?php foreach ($strands as $strand) { ?>
+                                                                    <option value="<?php echo $strand['id']; ?>"><?php echo $strand['strand']; ?></option>
                                                                 <?php } ?>
                                                             </select>
                                                         </div>
