@@ -145,7 +145,7 @@ if (isset($_POST['complete_exam'])) {
                 <?php include 'includes/navbar.php'; ?>
 
                 <div class="container-fluid">
-                    <?php if ($settings->{'choose_timer'} == 1) { ?>
+                    <?php if ($choose_timer == 1) { ?>
                         <label>Time Remaining:</label>
                         <h2 class="h3 mb-4 text-gray-800"><span id="timerText">--:--</span></h2>
                     <?php } ?>
@@ -153,7 +153,7 @@ if (isset($_POST['complete_exam'])) {
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-primary">Question <span id="question_number"></span></h6>
                             <?php
-                        if ($settings->{'choose_timer'} == 2) { ?>
+                        if ($choose_timer == 2) { ?>
                             <label>Time Remaining:</label>
                             <h2 class="h3 mb-4 text-gray-800"><span id="timerText">--:--</span></h2>
                         <?php } ?>
