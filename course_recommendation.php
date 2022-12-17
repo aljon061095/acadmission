@@ -33,12 +33,16 @@ foreach ($exam_results as $key => $value){
 $average = "$total" / "$count";
 function filterByCourseRecommendation($courses, $average) {
     return array_filter($courses, function ($item) use ($average) {
-        if ($average >= 90) {
+        if ($average >= 85 || $average == 100) {
             if ($item['course_order'] == 1) {
                 return true;
             }
-        } else {
+        } else if ($average >= 80 || $average < 85) {
             if ($item['course_order'] == 2) {
+                return true;
+            }
+        } else {
+            if ($item['course_order'] == 3) {
                 return true;
             }
         }
