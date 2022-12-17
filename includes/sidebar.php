@@ -100,7 +100,7 @@
         <li class="nav-item <?php if ($_SERVER['PHP_SELF'] == '/acadmission/manage_admin.php') { ?>active <?php } ?>">
             <a class="nav-link" href="manage_admin.php">
                 <i class="fas fa-fw fa-users"></i>
-                <span>Manage Admin</span></a>
+                <span>Administrators</span></a>
         </li>
 
         <li class="nav-item <?php if ($_SERVER['PHP_SELF'] == '/acadmission/admin_manage_instructor.php') { ?>active <?php } ?>">

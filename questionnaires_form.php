@@ -24,12 +24,13 @@ $question_types = $question_types_result->fetch_all(MYSQLI_ASSOC);
 $userId = $_SESSION["id"];
 //save settings and questionnaires
 if (isset($_POST['save_settings'])) {
+    $strand = $_POST['strand'];
+    $activation_date = $_POST['activation_date'];
+
     $settings['name'] = $_POST['name'];
-    $settings['course'] = $_POST['course'];
     $settings['description'] = $_POST['description'];
     $settings['choose_timer'] = $_POST['choose_timer'];
     $settings['choose_timer_option'] = $_POST['choose_timer_option'];
-    $settings['activation_date'] = $_POST['activation_date'];
     $jsonSettings = json_encode($settings);
 
     $question = $_POST['question'];
@@ -37,8 +38,8 @@ if (isset($_POST['save_settings'])) {
     $answer = $_POST['answer'];
     $points = $_POST['points'];
 
-    $query = "INSERT INTO questionnaires(user_id, settings)
-            VALUES ('$userId', '$jsonSettings')";
+    $query = "INSERT INTO questionnaires(user_id, strand, settings, activation_date)
+            VALUES ('$userId', '$strand', '$jsonSettings', '$activation_date')";
     $query_run = mysqli_query($link, $query);
 
     if ($query_run) {
@@ -112,8 +113,8 @@ if (isset($_POST['save_settings'])) {
                                                 <div class="row">
                                                     <div class="col-md-12 col-sm-8">
                                                         <div class="form-group">
-                                                            <label for="course">Strands</label>
-                                                            <select name="course" id="course" class="form-control" required>
+                                                            <label for="strand">Strands</label>
+                                                            <select name="strand" id="strand" class="form-control" required>
                                                                 <option value="" selected>Choose Strands...</option>
                                                                 <?php foreach ($strands as $strand) { ?>
                                                                     <option value="<?php echo $strand['id']; ?>"><?php echo $strand['strand']; ?> - <?php echo $strand['acronym'];   ?></option>

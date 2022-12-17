@@ -16,6 +16,7 @@ if (isset($_POST['add_instructor'])) {
     $last_name = $_POST['last_name'];
     $email_address = $_POST['email_address'];
     $username = $_POST['username'];
+    $role = 1;
 
     if (array_key_exists('profile', $_FILES)) {
         if ($_FILES['profile']['tmp_name'] != '') {
@@ -28,8 +29,8 @@ if (isset($_POST['add_instructor'])) {
         }
     }
 
-    $query = "INSERT INTO users(profile, first_name, last_name, email_address, username)
-            VALUES ('$profile', '$first_name', '$last_name' , '$email_address' , '$username')";
+    $query = "INSERT INTO users(profile, first_name, last_name, email_address, username, role)
+            VALUES ('$profile', '$first_name', '$last_name' , '$email_address' , '$username', '$role')";
     $query_run = mysqli_query($link, $query);
 
     if ($query_run) {
@@ -131,6 +132,9 @@ if (isset($_POST['update_instructor'])) {
                                                 <td><?php echo $instructor['username'] ?></td>
                                                 <td><?php echo $instructor['email_address'] ?></td>
                                                 <td>
+                                                    <button type="button" class="btn btn-success btn-circle btn-sm enable" data-id="<?php echo $instructor['id']; ?>" data-table-name="users">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
                                                     <a href="#" class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#update_instructor_<?php echo $instructor['id']; ?>">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </a>
@@ -167,7 +171,7 @@ if (isset($_POST['update_instructor'])) {
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data" novalidate>
                     <div class="modal-body">
                         <div class="row mb-3">
                             <div class="col-sm-3 mb-3 mb-sm-0">

@@ -69,3 +69,41 @@
 
       });
    </script>
+
+   <script>
+      $(document).ready(function() {
+         // Delete 
+         $('.enable').click(function() {
+            var el = this;
+
+            alert('test');
+
+            var userId = $(this).data('id');
+            var tableName = $(this).data('table-name');
+
+            // AJAX Request
+            $.ajax({
+               url: 'enable.php',
+               type: 'POST',
+               data: {
+                  id: userId,
+                  tableName: tableName
+               },
+               success: function(response) {
+
+                  alert(response);
+                  // if (response == 1) {
+                  //    // Remove row from HTML Table
+                  //    $(el).closest('tr').css('background', 'tomato');
+                  //    $(el).closest('tr').fadeOut(800, function() {
+                  //       $(this).remove();
+                  //    });
+
+                  //    $('.deleted-message').removeClass('hidden');
+                  // }
+
+               }
+            });
+         });
+      });
+   </script>

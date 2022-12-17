@@ -46,6 +46,7 @@ $exam_results = $examination_result->fetch_all(MYSQLI_ASSOC);
                                         <tr>
                                             <th>Exam Code</th>
                                             <th>Questionnaire's Title</th>
+                                            <th>Strand</th>
                                             <th>Course</th>
                                             <th>Grade</th>
                                             <th>Result</th>
@@ -68,6 +69,15 @@ $exam_results = $examination_result->fetch_all(MYSQLI_ASSOC);
                                                         $settings =json_decode($questionnaire['settings']);
                                                     ?>
                                                     <?php print $settings->{'name'}; ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                        $strand_id = $questionnaire['strand'];
+                                                        $strand_result = mysqli_query($link, "SELECT *
+                                                            FROM strands WHERE id = $strand_id");
+                                                        $strand = mysqli_fetch_array($strand_result);
+                                                    ?>
+                                                    <?php echo $strand['strand'] ?>
                                                 </td>
                                                 <td>
                                                     <?php

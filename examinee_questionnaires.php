@@ -6,23 +6,26 @@ require_once "includes/config.php";
 session_start();
 
 $user_id = $_SESSION["id"];
+$user_sql = "SELECT * FROM examinee WHERE examinee_id = $user_id";
+$user_result = mysqli_query($link, $user_sql);
+$user = $user_result->fetch_array(MYSQLI_ASSOC);
+$strand_id = $user['strand_id'];
 
-$questionnaires_sql = "SELECT * FROM questionnaires";
+$questionnaires_sql = "SELECT * FROM questionnaires WHERE strand = $strand_id";
 $questionnaires_result = mysqli_query($link, $questionnaires_sql);
-$questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
+$questionnaire_list = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
 
-//add checking for first and second choice
-// $date_now = date("Y-m-d H:i:s");
-// function filterByActivationDate($questionnaires, $dateNow)
-// {
-//     return array_filter($questionnaires, function ($item) use ($dateNow) {
-//         if ($item['end_time'] >= $dateNow) {
-//             return true;
-//         }
-//     });
-// }
+//add checking questionnaire validity
+$date_now = date("Y-m-d H:i:s");
+function filterByActivationDate($questionnaires, $dateNow) {
+    return array_filter($questionnaires, function ($item) use ($dateNow) {
+        if ($item['activation_date'] >= $dateNow) {
+            return true;
+        }
+    });
+}
 
-// $items = filterByActivationDate($items, $date_now);
+$questionnaires = filterByActivationDate($questionnaire_list, $date_now);
 ?>
 
 <!DOCTYPE html>
@@ -70,21 +73,16 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-primary"><?php print $settings->{'name'}; ?></h6>
-                                        <div class="dropdown no-arrow">
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in">
-                                                <div class="dropdown-header">Dropdown Header:</div>
-                                                <a class="dropdown-item" href="#">Action</a>
-                                                <a class="dropdown-item" href="#">Another action</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" href="#">Something else here</a>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="card-body">
                                         <?php print $settings->{'description'}; ?>
+
+                                        <?php
+                                            $strand_id = $questionnaire['strand'];
+                                            $strand_result = mysqli_query($link, "SELECT *
+                                                FROM strands WHERE id = $strand_id");
+                                            $strand = mysqli_fetch_array($strand_result);
+                                        ?>
 
                                         <?php
                                             $course_id = $settings->{'course'};
@@ -101,6 +99,10 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                                         ?>
 
                                         <div class="mt-4">
+                                            <span class="badge badge-success"><?php echo $strand['strand']; ?></span>
+                                        </div>
+
+                                        <div class="mt-2">
                                             <span class="badge badge-primary"><?php echo $department['department']; ?></span>
                                         </div>
 
@@ -115,7 +117,7 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                                         </div>
                                         <div class="mt-1">
                                             <small><strong>Activated until:</strong>
-                                            <?php print date('m-d-Y', strtotime($settings->{'activation_date'})); ?></small>
+                                            <?php print date('m-d-Y', strtotime($questionnaire['activation_date'])); ?></small>
                                         </div>
                                     </div>
                                     <div class="card-footer">

@@ -14,12 +14,38 @@ $course_rec_sql = "SELECT * FROM examinee
 $course_rec_result = mysqli_query($link, $course_rec_sql);
 $course_rec = $course_rec_result->fetch_array(MYSQLI_ASSOC);
 
+$examination_result_sql = "SELECT * FROM examination_result WHERE examinee_id = $examinee_id";
+$examination_result = mysqli_query($link, $examination_result_sql);
+$exam_results = $examination_result->fetch_all(MYSQLI_ASSOC);
+
 $department_id = $course_rec["department_id"];
 $course_sql = "SELECT * FROM courses WHERE department_id = $department_id";
 $course_result = mysqli_query($link, $course_sql);
 $courses = $course_result->fetch_all(MYSQLI_ASSOC);
 
-// print_r($courses);
+$total = 0;
+$count = 0;
+foreach ($exam_results as $key => $value){
+   $total += $value['grade'];
+   $count++;
+}
+
+$average = "$total" / "$count";
+function filterByCourseRecommendation($courses, $average) {
+    return array_filter($courses, function ($item) use ($average) {
+        if ($average >= 90) {
+            if ($item['course_order'] == 1) {
+                return true;
+            }
+        } else {
+            if ($item['course_order'] == 2) {
+                return true;
+            }
+        }
+    });
+}
+
+$courseFilters = filterByCourseRecommendation($courses, $average);
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +70,7 @@ $courses = $course_result->fetch_all(MYSQLI_ASSOC);
 
                     <div class="container">
                         <div class="row">
-                            <?php foreach($courses as $course) { ?>
+                            <?php foreach($courseFilters as $course) { ?>
                                 <div class="col-md-4 mb-4">
                                     <div class="card border-left-primary shadow h-100 py-2">
                                         <div class="card-body">
