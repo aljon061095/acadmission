@@ -78,38 +78,15 @@ $questionnaires = filterByActivationDate($questionnaire_list, $date_now);
                                         <?php print $settings->{'description'}; ?>
 
                                         <?php
-                                            $strand_id = $questionnaire['strand'];
-                                            $strand_result = mysqli_query($link, "SELECT *
-                                                FROM strands WHERE id = $strand_id");
-                                            $strand = mysqli_fetch_array($strand_result);
-                                        ?>
-
-                                        <?php
                                            $strand_id = $questionnaire['strand'];
                                            $result = mysqli_query($link, "SELECT *
                                                FROM strands WHERE id = $strand_id");
                                            $strand = mysqli_fetch_array($result);
                                         ?>
 
-                                        <?php
-                                            $department_id = $course['department_id'];
-                                            $result = mysqli_query($link, "SELECT *
-                                                FROM department WHERE id = $department_id");
-                                            $department = mysqli_fetch_array($result);
-                                        ?>
-
                                         <div class="mt-4">
                                             <span class="badge badge-success"><?php echo $strand['strand']; ?></span>
-                                        </div>
-
-                                        <div class="mt-2">
-                                            <span class="badge badge-primary"><?php echo $department['department']; ?></span>
-                                        </div>
-
-                                        <div class="mt-2">
-                                            <span class="badge badge-secondary"><?php echo $course['course']; ?></span>
-                                        </div>
-                                       
+                                        </div>                                       
 
                                         <div class="mt-4">
                                             <small><strong>Date Added:</strong>
