@@ -43,7 +43,7 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                     </div>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Examinee List</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Questionnaire List</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -67,12 +67,12 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                                                 <td><?php print $settings->{'description'}; ?></td>
                                                 <td>
                                                     <?php
-                                                        $course_id = $settings->{'course'};
+                                                        $strand_id = $questionnaire['strand'];
                                                         $result = mysqli_query($link, "SELECT *
-                                                            FROM strands WHERE id = $course_id");
-                                                        $course = mysqli_fetch_array($result);
+                                                            FROM strands WHERE id = $strand_id");
+                                                        $strand = mysqli_fetch_array($result);
                                                     ?>
-                                                    <?php echo $course['strand']; ?>
+                                                    <?php echo $strand['strand']; ?>
                                                 </td>
                                                 <td>
                                                     <?php echo date('m-d-Y', strtotime($questionnaire['date_added'])); ?></small>

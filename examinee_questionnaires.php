@@ -85,10 +85,10 @@ $questionnaires = filterByActivationDate($questionnaire_list, $date_now);
                                         ?>
 
                                         <?php
-                                            $course_id = $settings->{'course'};
-                                            $result = mysqli_query($link, "SELECT *
-                                                FROM courses WHERE id = $course_id");
-                                            $course = mysqli_fetch_array($result);
+                                           $strand_id = $questionnaire['strand'];
+                                           $result = mysqli_query($link, "SELECT *
+                                               FROM strands WHERE id = $strand_id");
+                                           $strand = mysqli_fetch_array($result);
                                         ?>
 
                                         <?php
