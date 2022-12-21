@@ -11,7 +11,7 @@ $user_result = mysqli_query($link, $user_sql);
 $user = $user_result->fetch_array(MYSQLI_ASSOC);
 $strand_id = $user['strand_id'];
 
-$questionnaires_sql = "SELECT * FROM questionnaires WHERE strand = $strand_id";
+$questionnaires_sql = "SELECT * FROM questionnaires WHERE strand = $strand_id && status = 2";
 $questionnaires_result = mysqli_query($link, $questionnaires_sql);
 $questionnaire_list = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
 

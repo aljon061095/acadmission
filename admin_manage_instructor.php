@@ -132,9 +132,16 @@ if (isset($_POST['update_instructor'])) {
                                                 <td><?php echo $instructor['username'] ?></td>
                                                 <td><?php echo $instructor['email_address'] ?></td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success btn-circle btn-sm enable" data-id="<?php echo $instructor['id']; ?>" data-table-name="users">
-                                                        <i class="fas fa-check"></i>
-                                                    </button>
+                                                    <?php if ($instructor['status'] == 0) { ?>
+                                                        <button type="button" class="btn btn-success btn-circle btn-sm enable" data-id="<?php echo $instructor['id']; ?>" data-table-name="users" title="Enable Instructor">
+                                                            <i class="fas fa-check"></i>
+                                                        </button>
+                                                    <?php } ?>
+                                                    <?php if ($instructor['status'] == 1) { ?>
+                                                        <button type="button" class="btn btn-danger btn-circle btn-sm disable" data-id="<?php echo $instructor['id']; ?>" data-table-name="users" title="Disable Instructor">
+                                                            <i class="fas fa-times"></i>
+                                                        </button>
+                                                    <?php } ?>
                                                     <a href="#" class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#update_instructor_<?php echo $instructor['id']; ?>">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </a>

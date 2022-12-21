@@ -39,6 +39,7 @@ if ($count > 0){
 function filterByCourseRecommendation($courses, $average) {
     return array_filter($courses, function ($item) use ($average) {
         if ($average >= 85 || $average == 100) {
+            echo 'test';
             if ($item['course_order'] == 1) {
                 return true;
             }

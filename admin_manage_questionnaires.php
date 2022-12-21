@@ -8,6 +8,19 @@ session_start();
 $questionnaires_sql = "SELECT * FROM questionnaires";
 $questionnaires_result = mysqli_query($link, $questionnaires_sql);
 $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
+
+if (isset($_POST['accept_questionnaire'])) {
+    $questionnaire_id = $_POST['questionnaire_id'];
+    $status = 2;
+
+    $query = "UPDATE `questionnaires` SET `status` = $status WHERE id = $questionnaire_id";
+    $query_run = mysqli_query($link, $query);
+
+    if ($query_run) {
+        $_SESSION['success_status'] = "You have successfully accepted the questionnaire.";
+        header("location: admin_manage_questionnaires.php");
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -87,10 +100,15 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                                                 <td><?php echo $course['course']; ?></td>
                                                 <td><?php echo date('m-d-Y', strtotime($questionnaire['date_added'])); ?></td>
                                                 <td class="text-center">
-                                                    <a href="#" class="btn btn-success btn-circle btn-sm">
-                                                        <i class="fas fa-check"></i>
-                                                    </a>
-                                                    <button type="button" class="btn btn-danger btn-circle btn-sm delete" data-id="<?php echo $questionnaire['id']; ?>" data-table-name="questionnaires">
+                                                    <?php if ($questionnaire['status'] == 1) { ?>
+                                                        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="user">
+                                                            <input type="hidden" name="questionnaire_id" value="<?php echo $questionnaire['id']; ?>">
+                                                            <button type="submit" name="accept_questionnaire" class="btn btn-success btn-circle btn-sm" title="Accept Questionnaire">
+                                                                <i class="fas fa-check"></i>
+                                                            </button>
+                                                        </form>
+                                                    <?php } ?>
+                                                    <button type="button" class="btn btn-danger btn-circle btn-sm delete" data-id="<?php echo $questionnaire['id']; ?>" data-table-name="questionnaires" title="Delete">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </td>

@@ -55,6 +55,7 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                                             <!-- <th>Department</th> -->
                                             <th>Strands</th>
                                             <th>Date Added</th>
+                                            <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -76,6 +77,19 @@ $questionnaires = $questionnaires_result->fetch_all(MYSQLI_ASSOC);
                                                 </td>
                                                 <td>
                                                     <?php echo date('m-d-Y', strtotime($questionnaire['date_added'])); ?></small>
+                                                </td>
+                                                <td>
+                                                <?php if ($questionnaire['status'] == 1) { ?>
+                                                        <span class="badge light badge-warning text-center">
+                                                                Pending
+                                                            </span>
+                                                        <?php } ?>
+                                                        <?php 
+                                                            if ($questionnaire['status'] == 2) { ?>
+                                                            <span class="badge light badge-success text-center">
+                                                                Approved
+                                                            </span>
+                                                        <?php } ?>
                                                 </td>
                                                 <td>
                                                     <a href="questionnaires_info.php?questionnaire_id=<?php echo $questionnaire['id'];  ?>" class="btn btn-info btn-circle btn-sm">

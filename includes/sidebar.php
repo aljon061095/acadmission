@@ -71,7 +71,6 @@
             <div id="Questionnaires" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href="admin_manage_questionnaires.php"> <i class="fas fa-fw fa-question-circle"></i> Manage Questionnaire</a>
-                    <a class="collapse-item" href="utilities-animation.html"><i class="fas fa-fw fa-star"></i> Course Category</a>
                     <a class="collapse-item" href="admin_question_category.php"><i class="fas fa-fw fa-question"></i> Question Category</a>
                 </div>
             </div>
