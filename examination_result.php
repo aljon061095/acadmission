@@ -47,7 +47,7 @@ $exam_results = $examination_result->fetch_all(MYSQLI_ASSOC);
                                             <th>Exam Code</th>
                                             <th>Questionnaire's Title</th>
                                             <th>Strand</th>
-                                            <th>Course</th>
+
                                             <th>Grade</th>
                                             <th>Result</th>
                                         </tr>
@@ -56,7 +56,7 @@ $exam_results = $examination_result->fetch_all(MYSQLI_ASSOC);
                                         <?php foreach($exam_results as $result) { ?>
                                             <tr>
                                                 <td>
-                                                    <a href="examination_result_details.php?result_id=<?php echo $result["id"]; ?>">
+                                                    <a href="examination_result_details.php?result_id=<?php echo $result["id"]; ?>&examinee_id=<?php echo $examinee_id; ?>">
                                                         EXAM-<?php echo $result['exam_code'] ?>
                                                     </a>
                                                 </td>
@@ -79,15 +79,7 @@ $exam_results = $examination_result->fetch_all(MYSQLI_ASSOC);
                                                     ?>
                                                     <?php echo $strand['strand'] ?>
                                                 </td>
-                                                <td>
-                                                    <?php
-                                                        $course_id = $settings->{'course'};
-                                                        $course_result = mysqli_query($link, "SELECT *
-                                                            FROM courses WHERE id = $course_id");
-                                                        $course = mysqli_fetch_array($course_result);
-                                                    ?>
-                                                    <?php echo $course['course'] ?>
-                                                </td>
+                                             
                                                 <td><?php echo $result['grade'] ?></td>
                                                 <td>
                                                     <?php if ($result['result'] == "Passed") { ?>

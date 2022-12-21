@@ -63,18 +63,20 @@ $questionnaires = filterByActivationDate($questionnaire_list, $date_now);
                         ?>
                     </div>
 
-                    <div class="row">
+                    <div >
                         <?php
                         if (array_filter($questionnaires) !== []) { 
                             foreach($questionnaires as $questionnaire) {
                                 $settings =json_decode($questionnaire['settings']);
                             ?>
+                            <div >  
                             <div class="col-md-6">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-primary"><?php print $settings->{'name'}; ?></h6>
                                     </div>
                                     <div class="card-body">
+                                    <small><strong>Description:</strong>
                                         <?php print $settings->{'description'}; ?>
 
                                         <?php
@@ -91,25 +93,11 @@ $questionnaires = filterByActivationDate($questionnaire_list, $date_now);
                                            $strand = mysqli_fetch_array($result);
                                         ?>
 
-                                        <?php
-                                            $department_id = $course['department_id'];
-                                            $result = mysqli_query($link, "SELECT *
-                                                FROM department WHERE id = $department_id");
-                                            $department = mysqli_fetch_array($result);
-                                        ?>
+                                      
 
                                         <div class="mt-4">
                                             <span class="badge badge-success"><?php echo $strand['strand']; ?></span>
                                         </div>
-
-                                        <div class="mt-2">
-                                            <span class="badge badge-primary"><?php echo $department['department']; ?></span>
-                                        </div>
-
-                                        <div class="mt-2">
-                                            <span class="badge badge-secondary"><?php echo $course['course']; ?></span>
-                                        </div>
-                                       
 
                                         <div class="mt-4">
                                             <small><strong>Date Added:</strong>
@@ -130,6 +118,8 @@ $questionnaires = filterByActivationDate($questionnaire_list, $date_now);
                                     </div>
                                 </div>
                             </div>
+                            </div>
+                           
                         <?php } 
                         } else { ?>
                             <div>

@@ -44,6 +44,15 @@ if (isset($_POST['accept_questionnaire'])) {
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800">Manage Questionnaires</h1>
 
+                    <div class="mb-3">
+                        <a href="questionnaires_form.php" class="btn btn-success">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="text">Add New Questionnaries</span>
+                        </a>
+                    </div>
+
                     <div class="row">
                         <?php
                         if (isset($_SESSION['success_status'])) {
@@ -70,9 +79,9 @@ if (isset($_POST['accept_questionnaire'])) {
                                         <tr>
                                             <th>Title</th>
                                             <th>Description</th>
-                                            <th>Department</th>
-                                            <th>Course</th>
+                                            <th>Strand</th>
                                             <th>Date Added</th>
+                                            <th>Strand</th>
                                             <th class="text-center">Actions</th>
                                         </tr>
                                     </thead>
@@ -84,21 +93,28 @@ if (isset($_POST['accept_questionnaire'])) {
                                                 <td><?php print $settings->{'name'}; ?></td>
                                                 <td><?php print $settings->{'description'}; ?></td>
                                                 <?php
-                                                    $course_id = $settings->{'course'};
-                                                    $result = mysqli_query($link, "SELECT *
-                                                    FROM courses WHERE id = $course_id");
-                                                    $course = mysqli_fetch_array($result);
+                                                     $strand_id = $questionnaire['strand'];
+                                                     $result = mysqli_query($link, "SELECT *
+                                                    FROM strands WHERE id = $strand_id");
+                                                     $strand = mysqli_fetch_array($result);
                                                 ?>
 
-                                                <?php
-                                                    $department_id = $course['department_id'];
-                                                    $result = mysqli_query($link, "SELECT *
-                                                    FROM department WHERE id = $department_id");
-                                                    $department = mysqli_fetch_array($result);
-                                                ?>
-                                                <td><?php echo $department['department']; ?></td>
-                                                <td><?php echo $course['course']; ?></td>
+                                                <td><?php echo $strand['strand']; ?></td>
                                                 <td><?php echo date('m-d-Y', strtotime($questionnaire['date_added'])); ?></td>
+                                                <td>
+                                                <?php if ($questionnaire['status'] == 1) { ?>
+                                                        <span class="badge light badge-warning text-center">
+                                                                Pending
+                                                            </span>
+                                                        <?php } ?>
+                                                        <?php 
+                                                            if ($questionnaire['status'] == 2) { ?>
+                                                            <span class="badge light badge-success text-center">
+                                                                Approved
+                                                            </span>
+                                                        <?php } ?>
+                                                </td>
+                                                
                                                 <td class="text-center">
                                                     <?php if ($questionnaire['status'] == 1) { ?>
                                                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" class="user">
