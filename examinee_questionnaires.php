@@ -80,24 +80,23 @@ $questionnaires = filterByActivationDate($questionnaire_list, $date_now);
                                         <?php print $settings->{'description'}; ?>
 
                                         <?php
-                                            $strand_id = $questionnaire['strand'];
-                                            $strand_result = mysqli_query($link, "SELECT *
-                                                FROM strands WHERE id = $strand_id");
-                                            $strand = mysqli_fetch_array($strand_result);
-                                        ?>
-
-                                        <?php
                                            $strand_id = $questionnaire['strand'];
                                            $result = mysqli_query($link, "SELECT *
                                                FROM strands WHERE id = $strand_id");
                                            $strand = mysqli_fetch_array($result);
                                         ?>
 
+<<<<<<< HEAD
                                       
 
                                         <div class="mt-4">
                                             <span class="badge badge-success"><?php echo $strand['strand']; ?></span>
                                         </div>
+=======
+                                        <div class="mt-4">
+                                            <span class="badge badge-success"><?php echo $strand['strand']; ?></span>
+                                        </div>                                       
+>>>>>>> eb2d66742c63ad69d000ceee7db9a0aaf4c18657
 
                                         <div class="mt-4">
                                             <small><strong>Date Added:</strong>
