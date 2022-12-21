@@ -30,21 +30,29 @@ foreach ($exam_results as $key => $value){
    $count++;
 }
 
-$average = "$total" / "$count";
+
+$average = 0;
+if ($count > 0){
+    $average = "$total" / "$count";
+}
+
 function filterByCourseRecommendation($courses, $average) {
     return array_filter($courses, function ($item) use ($average) {
         if ($average >= 85 || $average == 100) {
             if ($item['course_order'] == 1) {
                 return true;
             }
-        } else if ($average >= 80 || $average < 85) {
+        } else if ($average >= 80 || $average > 85) {
             if ($item['course_order'] == 2) {
                 return true;
             }
-        } else {
+        } else if ($average >= 75 || $average > 80) {
             if ($item['course_order'] == 3) {
                 return true;
             }
+        }
+        else {
+            return false;
         }
     });
 }
@@ -74,7 +82,9 @@ $courseFilters = filterByCourseRecommendation($courses, $average);
 
                     <div class="container">
                         <div class="row">
-                            <?php foreach($courseFilters as $course) { ?>
+                            <?php 
+                            if (array_filter($courseFilters)!== []){
+                            foreach($courseFilters as $course) { ?>
                                 <div class="col-md-4 mb-4">
                                     <div class="card border-left-primary shadow h-100 py-2">
                                         <div class="card-body">
@@ -94,7 +104,15 @@ $courseFilters = filterByCourseRecommendation($courses, $average);
                                         </div>
                                     </div>
                                 </div>
-                            <?php } ?>
+                            <?php } } else { ?>
+                                <div>
+                                <div class="col-lg-12">
+                                    <div class="alert alert-primary" role="alert">
+                                        No available course recommendation(s).
+                                    </div>
+                                </div>
+                            </div>
+                                <?php } ?>
                         </div>
                     </div>
                 </div>

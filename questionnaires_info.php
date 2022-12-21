@@ -63,25 +63,25 @@ $questions = $questions_result->fetch_all(MYSQLI_ASSOC);
                                     <?php print $settings->{'description'}; ?>
 
                                     <?php
-                                    $course_id = $settings->{'course'};
-                                    $result = mysqli_query($link, "SELECT *
-                                                FROM courses WHERE id = $course_id");
-                                    $course = mysqli_fetch_array($result);
+                                        $strand_id = $questionnaire['strand'];
+                                        $result = mysqli_query($link, "SELECT *
+                                            FROM strands WHERE id = $strand_id");
+                                        $strand = mysqli_fetch_array($result);
                                     ?>
 
-                                    <?php
+                                    <!-- <?php
                                     $department_id = $course['department_id'];
                                     $result = mysqli_query($link, "SELECT *
-                                                FROM department WHERE id = $department_id");
+                                        FROM department WHERE id = $department_id");
                                     $department = mysqli_fetch_array($result);
                                     ?>
 
                                     <div class="mt-4">
                                         <span class="badge badge-primary"><?php echo $department['department']; ?></span>
-                                    </div>
+                                    </div> -->
 
                                     <div class="mt-2">
-                                        <span class="badge badge-secondary"><?php echo $course['course']; ?></span>
+                                        <span class="badge badge-secondary"><?php echo $strand['strand']; ?></span>
                                     </div>
 
 
